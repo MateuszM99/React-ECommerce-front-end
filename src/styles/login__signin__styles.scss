@@ -3,11 +3,22 @@
     padding: 0;
 }
 
+
+.popup{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+    background: rgba(0, 0, 0, .6);
+    z-index: 1;
+}
+
 .login__box{
-    position: absolute;
+    position: relative;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%,50%);
     background-color: white;
     color : gray;
     border: solid 1px lightgray;
@@ -16,14 +27,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    display: none;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .signin__box{
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%,-50%);
     background-color: white;
     color : gray;
     border: solid 1px lightgray;
@@ -32,15 +43,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    display: none;
+    font-family: 'Open Sans', sans-serif;
 }
 
-.login__box h2{
+.login__box p{
     margin-top: 15px;
+    font-size: 26px;
 }
 
-.signin__box h2{
+.signin__box p{
     margin-top: 15px;
+    font-size: 26px;
 }
 
 .login__input, .password__input, .email__input{
@@ -66,26 +79,29 @@
 
 .login__input input{
     width: 60%;
-    height: 40%;
+    height: 30%;
     border-style: none;
     outline: none;
     border-bottom: solid 1px lightgray;
+    font-size: 15px;
 }
 
 .password__input input{
     width: 60%;
-    height: 40%;
+    height: 30%;
     border-style: none;
     outline: none;
     border-bottom: solid 1px lightgray;
+    font-size: 15px;
 }
 
 .email__input input{
     width: 60%;
-    height: 40%;
+    height: 30%;
     border-style: none;
     outline: none;
     border-bottom: solid 1px lightgray;
+    font-size: 15px;
 }
 
 .login__input input[type=text]:focus{
@@ -117,4 +133,18 @@
     background-color: darkgray;
 }
 
+.quit__button{
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
 
+.validation{
+    margin-top: 5px;
+    font-size: 11px;
+    width: 60%;
+    color: red;
+    display: flex;
+    justify-content: flex-start;
+}

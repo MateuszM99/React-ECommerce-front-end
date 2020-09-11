@@ -62,6 +62,13 @@
     align-items: center;
 }
 
+.right__header a{
+    cursor: pointer;
+}
+
+.right__header a:hover{
+    color : gray;
+}
 
   .main__categories{
     font-family: 'Roboto Condensed', sans-serif;
