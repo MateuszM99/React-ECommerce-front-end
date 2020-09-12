@@ -10,9 +10,9 @@ export default class SignIn_View extends Component {
             username : null,
             email : null,
             password : null,      
-            usernameError: "Username required",
-            emailError : "E-mail required",
-            passwordError : "Password required"  
+            usernameError: null,
+            emailError : null,
+            passwordError : null,
         }
         this.onChange = this.onChange.bind(this);
         this.register = this.register.bind(this);
@@ -26,24 +26,34 @@ export default class SignIn_View extends Component {
         let usernameError = "";
         let emailError = "";
         let passwordError = "";
+        this.setState({usernameError});
+        this.setState({emailError});
+        this.setState({passwordError});
         let result = true;
 
-        if(this.state.username.length < 6){
-        usernameError = "Username has to be at least 6 characters long";
-        this.setState({usernameError});
-        result = false;
+        if(this.state.username != null){
+            if(this.state.username.length < 6){
+            usernameError = "Username has to be at least 6 characters long";
+            this.setState({usernameError});
+            result = false;
+            }
         }
 
-        if(!this.state.email.includes('@')){
-            emailError = "Email is invalid";
-            this.setState({emailError});
-            result = false;
+        if(this.state.email != null){
+            if(!this.state.email.includes('@')){
+                emailError = "Email is invalid";
+                this.setState({emailError});
+                result = false;
+            }
         }
 
-        if(this.state.password.length < 9){
-            passwordError = "Password has to be at least 9 characters long";
-            this.setState({passwordError});
-            result = false;
+        if(this.state.password != null){          
+                let regex = new RegExp("^(.{0,7}|[^0-9]*|[^A-Z]*|[a-zA-Z0-9]*)$");
+                if(regex.test(this.state.password)){
+                passwordError = "Password has to be at least 8 characters long,contain 1 special sign and 1 uppercase letter";
+                this.setState({passwordError});
+                result = false;
+                }               
         }
 
         return result;
@@ -51,15 +61,16 @@ export default class SignIn_View extends Component {
     
 
 
-    register = (e) => {
+    register = (e) => {      
         if(!this.validate()){
-        e.preventDefault();
-        return
+            e.preventDefault();
+            return;
+        } else {      
+            PostData('register',this.state).then((result) => {
+                let responseJson = result;
+                console.log(responseJson);
+            }); 
         }
-        PostData('register',this.state).then((result) => {
-            let responseJson = result;
-            console.log(responseJson);
-        }); 
     }
 
     render() {
@@ -71,17 +82,17 @@ export default class SignIn_View extends Component {
                 <div className="login__input">
                 <label>Username</label>
                 <input type="text" placeholder="Enter your username" name="username" onChange={this.onChange}></input>
-                {!this.state.username ? (<div className="validation">{this.state.usernameError}</div>) : null}
+                {!this.state.username ?  (<div className="validation">Username required</div>) : <div className="validation">{this.state.usernameError}</div>}
                 </div>
                 <div className="email__input">
                 <label>E-mail</label>
                 <input type="text" placeholder="Enter your email" name="email" onChange={this.onChange}></input>
-                {!this.state.email ? (<div className="validation">{this.state.emailError}</div>) : null}
+                {!this.state.email ? (<div className="validation">E-mail required</div>) : <div className="validation">{this.state.emailError}</div>}
                 </div>
                 <div className="password__input">
                 <label>Password</label>
                 <input type="password" placeholder="Enter your password" name="password" onChange={this.onChange}></input>
-                {!this.state.password ? (<div className="validation">{this.state.passwordError}</div>) : null}
+                {!this.state.password ? (<div className="validation">Password required</div>) : <div className="validation">{this.state.passwordError}</div>}
                 </div>
                 <button className="login__button" type="submit">Sign in</button>
                 <img src="/images/quit.png" className="quit__button" onClick={this.props.onXClick}></img>
