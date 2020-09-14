@@ -16,13 +16,13 @@ export default class Login_View extends Component {
 
     login = () => {
         if(this.state.username && this.state.password){
-        PostData('login',this.state).then((result) => {
-            let responseJson = result;    
-            sessionStorage.setItem('userData',responseJson);      
-            console.log(responseJson);
-        });
-        this.props.onXClick();
-    }
+            PostData('authenticate/login',this.state).then((result) => {
+                let responseJson = result;    
+                localStorage.setItem('userData',responseJson);      
+                console.log(responseJson);
+            });
+            this.props.onXClick();
+        }
 
     }
 
@@ -46,7 +46,7 @@ export default class Login_View extends Component {
                 <input type="password" placeholder="Enter your password" name="password" onChange={this.onChange}></input>
                 </div>
                 <button className="login__button" type="submit">Log in</button> 
-                <img src="/images/quit.png" className="quit__button" onClick={this.props.onXClick}></img>             
+                <img src="/images/letter-x.png" className="quit__button" onClick={this.props.onXClick}></img>             
             </div>
             </form>
             </div>

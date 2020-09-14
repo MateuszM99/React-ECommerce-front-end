@@ -1,10 +1,8 @@
 export default function PostData(type, userData) {
-    let BaseURL = 'https://localhost:44333/api/authenticate/';
+    let BaseURL = 'https://localhost:44333/api/';
     //let BaseURL = 'http://localhost/PHP-Slim-Restful/api/';
 
-    return new Promise((resolve, reject) =>{
-    
-         
+    return new Promise((resolve, reject) =>{       
         fetch(BaseURL+type, {
             method: 'POST',
             mode: 'cors',

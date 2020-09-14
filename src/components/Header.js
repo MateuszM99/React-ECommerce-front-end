@@ -35,14 +35,14 @@ export class Header extends Component {
     }
 
     handleLoggedIn = () => {
-        console.log(sessionStorage.getItem("userData"))
-        if(sessionStorage.getItem("userData"))
+        console.log(localStorage.getItem("userData"))
+        if(localStorage.getItem("userData"))
         this.setState({isLoggedIn : true})
     }
 
     logout = () => {
-        sessionStorage.setItem("userData",'')
-        sessionStorage.clear();
+        localStorage.setItem("userData",'')
+        localStorage.clear();
         this.setState({isLoggedIn: false})
     }
 
@@ -50,7 +50,7 @@ export class Header extends Component {
 
     render() {
         return (
-            <div>
+            <header>
             <div className="main__header">
                 <img src="/images/shop-logo-white.png" className="shop__logo" onClick={this.handleLoggedIn}></img>
                 <div className="search__input">
@@ -61,8 +61,11 @@ export class Header extends Component {
                 <Login_View isLoginShown={this.state.isLoginShown} onXClick={this.handleLoginShow}/>
                 <a onClick={this.handleSignInShow} style={{display : this.state.isLoggedIn ? 'none' : 'block'}}>Sign in</a>  
                 <SignIn_View isSignInShown={this.state.isSignInShown} onXClick={this.handleSignInShow}/>
-                <a onClick={this.logout} style={{display : this.state.isLoggedIn ? 'block' : 'none'}}>Logout</a>       
-                <img src="/images/shopping-cart.png" className="header__cart" onClick={this.handleCartShow}></img>
+                <a onClick={this.logout} style={{display : this.state.isLoggedIn ? 'block' : 'none'}}>Logout</a>   
+                <div className="cart__div">   
+                <img src="/images/cart-38-32.png" className="header__cart" onClick={this.handleCartShow}></img>
+                <p className="cart__itemsCount">0</p>
+                </div> 
                 <Cart_View isCartShown={this.state.isCartShown} onCartShow={this.handleCartShow}/>
                 </div>
             </div>
@@ -74,7 +77,7 @@ export class Header extends Component {
                 <a>Activewear</a>
                 <a>Brands</a>
             </div>
-            </div>
+            </header>
         )
     }
 }

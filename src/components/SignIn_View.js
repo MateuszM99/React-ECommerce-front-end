@@ -65,12 +65,12 @@ export default class SignIn_View extends Component {
         if(!this.validate()){
             e.preventDefault();
             return;
-        } else {      
-            PostData('register',this.state).then((result) => {
-                let responseJson = result;
-                console.log(responseJson);
-            }); 
-        }
+        }     
+        
+        PostData('authenticate/register',this.state).then((result) => {
+            let responseJson = result;
+            console.log(responseJson);
+        });      
     }
 
     render() {
@@ -95,7 +95,7 @@ export default class SignIn_View extends Component {
                 {!this.state.password ? (<div className="validation">Password required</div>) : <div className="validation">{this.state.passwordError}</div>}
                 </div>
                 <button className="login__button" type="submit">Sign in</button>
-                <img src="/images/quit.png" className="quit__button" onClick={this.props.onXClick}></img>
+                <img src="/images/letter-x.png" className="quit__button" onClick={this.props.onXClick}></img>
             </div>
             </form>
             </div>
