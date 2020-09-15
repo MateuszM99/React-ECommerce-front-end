@@ -11,6 +11,7 @@ import {
   Route,
   Link
 } from "../node_modules/react-router-dom";
+import Order_View from './components/Order_View';
 
 function App() {
 
@@ -25,11 +26,7 @@ function App() {
       {/* http://localhost:3000/accessories */}
       {/* http://localhost:3000/order */}
       {/* http://localhost:3000/checkout */}
-      <Switch>
-        <Route path="/">
-          <Header/>
-          <Product_View/>
-        </Route>
+      <Switch>   
         <Route path="/new">
 
         </Route>
@@ -40,10 +37,14 @@ function App() {
 
         </Route>
         <Route path="/order">
-
+          <Order_View/>
         </Route>
         <Route path="/checkout">
-
+          <Order_View/>
+        </Route>
+        <Route path="/">
+          <Header/>
+          <Product_View/>
         </Route>
       </Switch>
     </div>

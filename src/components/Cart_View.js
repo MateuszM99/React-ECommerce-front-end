@@ -7,11 +7,21 @@ export class Cart_View extends Component {
     constructor(props) {
         super(props);
 
+        this.getCartPrice = this.getCartPrice.bind(this);
+
         this.state = {
           error: null,
-          isLoaded: false,
           cartProducts: []
         };
+      }
+
+      getCartPrice = () => {
+        var totalCartPrice = 0;
+        this.state.cartProducts.forEach(cartProduct => {
+            totalCartPrice += cartProduct.product.productPrice * cartProduct.quantity;
+        });
+
+        return totalCartPrice;
       }
 
       componentDidMount() {
@@ -21,16 +31,11 @@ export class Cart_View extends Component {
           .then(
             (result) => {
               this.setState({
-                isLoaded: true,
                 cartProducts: result
               });
             },
-            // Uwaga: to ważne, żeby obsłużyć błędy tutaj, a
-            // nie w bloku catch(), aby nie przetwarzać błędów
-            // mających swoje źródło w komponencie.
             (error) => {
               this.setState({
-                isLoaded: true,
                 error
               });
             }
@@ -44,22 +49,16 @@ export class Cart_View extends Component {
           .then(
             (result) => {
               this.setState({
-                isLoaded: true,
                 cartProducts: result
               });
             },
-            // Uwaga: to ważne, żeby obsłużyć błędy tutaj, a
-            // nie w bloku catch(), aby nie przetwarzać błędów
-            // mających swoje źródło w komponencie.
             (error) => {
               this.setState({
-                isLoaded: true,
                 error
               });
             }
           )
       }
-
 
     render() {
         const { error, isLoaded, cartProducts } = this.state;
@@ -79,10 +78,10 @@ export class Cart_View extends Component {
                     </ul>
                     <div className="cart__total">
                     <p>Total price :</p>
-                    <p>127.67 zł</p>
+                    <p>{this.getCartPrice()}</p>
                     </div>
                     <div className="cart__order">
-                    <a>Continue</a>
+                    <a onClick={this.props.onCartShow}>Continue</a>
                     <button className="order__button">Order</button>
                     </div>
                 </div>
