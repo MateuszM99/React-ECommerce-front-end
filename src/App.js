@@ -12,10 +12,9 @@ import {
   Link
 } from "../node_modules/react-router-dom";
 import Order_View from './components/Order_View';
+import Product_View_Header from './components/Product_View_Header'
 
 function App() {
-
-  
 
   return (
     <Router>
@@ -26,15 +25,16 @@ function App() {
       {/* http://localhost:3000/accessories */}
       {/* http://localhost:3000/order */}
       {/* http://localhost:3000/checkout */}
-      <Switch>   
-        <Route path="/new">
-
-        </Route>
-        <Route path="/clothing">
-
-        </Route>
-        <Route path="/shoes">
-
+      <Switch>
+        <Route path="/products" exact>
+            <Header/>
+            <Product_View_Header/>
+            <Product_View/>
+        </Route>   
+        <Route path="/products/:id">
+            <Header/>
+            <Product_View_Header/>
+            <Product_View/>
         </Route>
         <Route path="/order">
           <Order_View/>
@@ -44,6 +44,7 @@ function App() {
         </Route>
         <Route path="/">
           <Header/>
+          <Product_View_Header/>
           <Product_View/>
         </Route>
       </Switch>

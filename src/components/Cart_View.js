@@ -42,7 +42,7 @@ export class Cart_View extends Component {
           )
       }
 
-      componentDidUpdate(){
+     /* componentDidUpdate(){
         let cartId = localStorage.getItem("cartId");
         fetch("https://localhost:44333/api/cart/getCart?cartId=" + cartId)
           .then(res => res.json())
@@ -58,7 +58,7 @@ export class Cart_View extends Component {
               });
             }
           )
-      }
+      }*/
 
     render() {
         const { error, isLoaded, cartProducts } = this.state;

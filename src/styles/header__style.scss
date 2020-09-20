@@ -116,9 +116,10 @@ header{
 
 
 .main__categories{
+    position: sticky;
     font-family: 'Lato', sans-serif;
     text-transform: uppercase;
-    height: 6vh;
+    height: 8vh;
     width: 60%;
     display: flex;
     justify-content: space-around;
@@ -133,5 +134,5 @@ header{
 }
 
 .main__categories a:hover{
-    border-bottom: solid 1px black;
+    border-bottom: solid 2px black;
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Product from './Product'
 import '../styles/product__view__main.scss'
+import { withRouter } from "../../node_modules/react-router-dom";
 
 export class Product_View extends Component {
     
@@ -15,7 +16,7 @@ export class Product_View extends Component {
       }
 
       componentDidMount() {
-        fetch("https://localhost:44333/api/products/getProducts")
+        fetch("https://localhost:44333/api/products/products" + this.props.location.search)
           .then(res => res.json())
           .then(
             (result) => {
@@ -24,9 +25,6 @@ export class Product_View extends Component {
                 products: result
               });
             },
-            // Uwaga: to ważne, żeby obsłużyć błędy tutaj, a
-            // nie w bloku catch(), aby nie przetwarzać błędów
-            // mających swoje źródło w komponencie.
             (error) => {
               this.setState({
                 isLoaded: true,
@@ -34,7 +32,28 @@ export class Product_View extends Component {
               });
             }
           )
+
+          console.log(this.props.match.params.id);
       }
+
+      /*componentDidUpdate(){
+        fetch("https://localhost:44333/api/products/products" + this.props.location.search)
+          .then(res => res.json())
+          .then(
+            (result) => {
+              this.setState({
+                isLoaded: true,
+                products: result
+              });
+            },
+            (error) => {
+              this.setState({
+                isLoaded: true,
+                error
+              });
+            }
+          )
+      }*/
       
 
     render() {
@@ -43,7 +62,7 @@ export class Product_View extends Component {
             <section id="products__list">
                 <div className="product__main">
                     <ul>
-                    {products.map(product => (
+                    {products.filter(product => product.category.categoryName == this.props.match.params.id).map(product => (
                     <li key={product.productId}>
                     <Product id={product.productId} title={product.productName} price={product.productPrice} addToCart={this.addToCart}/>
                     </li>
@@ -55,4 +74,4 @@ export class Product_View extends Component {
     }
 }
 
-export default Product_View
+export default (withRouter(Product_View))

@@ -3,7 +3,7 @@ import '../styles/header__style.scss';
 import Cart_View from './Cart_View';
 import Login_View from './Login_View';
 import SignIn_View from './SignIn_View';
-
+import { Link } from "../../node_modules/react-router-dom";
 
 export class Header extends Component {
 
@@ -16,6 +16,7 @@ export class Header extends Component {
           isCartShown: false,
           isLoggedIn : false,
           cartCount : 0,
+          categories : [],
           error: null
         };
 
@@ -67,9 +68,24 @@ export class Header extends Component {
               });
             }
           )
-    }
+    
+        fetch("https://localhost:44333/api/products/getCategories")
+          .then(res => res.json())
+          .then(
+            (result) => {
+              this.setState({
+                categories : result
+              });
+            },
+            (error) => {
+              this.setState({
+                error
+              });
+            }
+          )    
+        }
 
-    componentDidUpdate(){
+    /*componentDidUpdate(){
         let cartId = localStorage.getItem("cartId");
         if(cartId == null){
             this.setState({cartCount: 0});
@@ -88,10 +104,11 @@ export class Header extends Component {
               });
             }
           )
-    }
+    }*/
     
 
     render() {
+      const {categories} = this.state;
         return (
             <header>   
               <div className="main__header">
@@ -116,12 +133,11 @@ export class Header extends Component {
                   </div>
               </div>
               <div className="main__categories">
-                  <a>New products</a>
-                  <a>Clothing</a>
-                  <a>Accessories</a>
-                  <a>Shoes</a>
-                  <a>Activewear</a>
-                  <a>Brands</a>
+                {categories.map(category => (
+                  <a key={category.categoryId}>
+                    <Link to={`/products/${category.categoryName}`} style={{ textDecoration: 'none' }}>{category.categoryName}</Link>
+                  </a>
+                ))}
               </div>
             </header>
         )
