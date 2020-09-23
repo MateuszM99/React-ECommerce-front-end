@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Cart_Product from '../cart_components/Cart_Product'
 import '../../styles/cart_styles/cart__style.scss'
 import {Link} from  "react-router-dom"
+import axios from 'axios';
 
 export class Cart_View extends Component {
 
@@ -27,20 +28,18 @@ export class Cart_View extends Component {
 
       componentDidMount() {
         let cartId = localStorage.getItem("cartId");
-        fetch("https://localhost:44333/api/cart/getCart?cartId=" + cartId)
-          .then(res => res.json())
-          .then(
-            (result) => {
-              this.setState({
-                cartProducts: result
-              });
-            },
-            (error) => {
-              this.setState({
-                error
-              });
-            }
-          )
+        var self = this;
+        axios.get("https://localhost:44333/api/cart/getCart?cartId=" + cartId)
+          .then(function(response){
+            self.setState({
+              cartProducts: response.data
+            });
+          })
+          .catch(function(error){
+            self.setState({
+              error
+            });
+          })
       }
 
      /* componentDidUpdate(){

@@ -5,6 +5,7 @@ import Login_View from '../authentication_components/Login_View';
 import SignIn_View from '../authentication_components/SignIn_View';
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
+import axios from 'axios'
 
 export class Header extends Component {
 
@@ -89,21 +90,20 @@ export class Header extends Component {
         if(cartId == null){
             this.setState({cartCount: 0});
         }
-        fetch("https://localhost:44333/api/cart/getCartCount?cartId=" + cartId)
-          .then(res => res.json())
-          .then(
-            (result) => {
-              this.setState({
-                cartCount: result
+                
+          var self = this;
+          axios.get("https://localhost:44333/api/cart/getCartCount?cartId=" + cartId)
+            .then(function(response){
+              self.setState({
+                cartCount: response.data
               });
-            },
-            (error) => {
-              this.setState({
+            })
+            .catch(function(error){
+              self.setState({
                 error
               });
-            }
-          )
-    
+            })
+   
         fetch("https://localhost:44333/api/products/getCategories")
           .then(res => res.json())
           .then(

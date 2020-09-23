@@ -62,9 +62,9 @@ export class Product_View_Details extends Component {
                 </div>
                 <div className="product__details__info">
                     <div className="product__details__info__nav">
-                        <Link style={{ textDecoration: 'none'}}>Shop</Link>
+                        <Link style={{ textDecoration: 'none'}} to="/">Shop</Link>
                         <span>/</span>
-                        <Link style={{ textDecoration: 'none' }}>T-shirt</Link>
+                        <Link style={{ textDecoration: 'none' }} to={`/${this.product.productCategory.categoryName}`}>{this.product.productCategory.categoryName}</Link>
                         <span>/</span>
                         <p>{this.state.product.productName}</p>
                     </div>

@@ -34,7 +34,7 @@ export default class SignIn_View extends Component {
                         .matches(phoneRegExp,'Phone number is not valid')
                         .required('Phone number is required'),
                     password : Yup.string()
-                        .matches(passwordRegExp,'Password has to be at least 8 characters long,contain 1 special sign and 1 uppercase letter')
+                        //.matches(passwordRegExp,'Password has to be at least 8 characters long,contain 1 special sign and 1 uppercase letter')
                         .required('Password is required'),
                  })}
 
