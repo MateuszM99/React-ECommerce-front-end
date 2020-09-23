@@ -1,29 +1,78 @@
 import React, { Component } from 'react'
 
 export class Products_List extends Component {
+
+    constructor(props){
+        super(props)
+
+        this.state = {
+            error: null,
+            cartProducts: [],
+            isLoaded : false
+        }
+    }
+
+    getCartPrice = () => {
+        var totalCartPrice = 0;
+        this.state.cartProducts.forEach(cartProduct => {
+            totalCartPrice += cartProduct.product.productPrice * cartProduct.quantity;
+        });
+
+        return totalCartPrice;
+      }
+
+    componentDidMount() {
+        let cartId = localStorage.getItem("cartId");
+        fetch("https://localhost:44333/api/cart/getCart?cartId=" + cartId)
+          .then(res => res.json())
+          .then(
+            (result) => {
+              this.setState({
+                isLoaded: true,
+                cartProducts: result
+              });
+            },
+            (error) => {
+              this.setState({
+                isLoaded: true,
+                error
+              });
+            }
+          )
+      }
+
+
     render() {
+        const { error, isLoaded, cartProducts } = this.state;
+        if(isLoaded == false){
+            return(
+                <div>Loading</div>
+            )
+        }
         return (
             <div className="products__list">
                     <div className="products__list__header">
                     <h4>3 Items</h4>
                     </div>
-                    <div className="products__list__product">
-                        <img src="https://cdn.shoplo.com/4326/products/th50/aaa9/1926-ekipa-waz-05biala.jpg"></img>
+                    {cartProducts.map(cartProduct => (
+                    <div className="products__list__product" key={cartProduct.product.productId}>
+                        <img src={cartProduct.product.imageUrl}></img>
                         <span>
-                            <p className="products__list__product__name">T-Shirt EKIPA Snake Bialy dsdsdfsafasfsasasasasasasasasasasasasasasasasadsdadasda</p>
+                            <p className="products__list__product__name">{cartProduct.product.productName}</p>
                             <p className="products__list__product__size">Size: S</p>
                         </span>
-                        <p className="products__list__product__quantity">1</p>
-                        <p className="products__list__product__price">64.99 $</p>
+                        <p className="products__list__product__quantity">{cartProduct.quantity}</p>
+                        <p className="products__list__product__price">{cartProduct.product.productPrice}$</p>
                     </div>
+                    ))}
                     <div className="products__list__costs">
                         <span>
                             <p className="products__list__costs__label">Sum:</p>
-                            <p className="products__list__costs__price">64.99 $</p>
+                    <p className="products__list__costs__price">{this.getCartPrice()}$</p>
                         </span>
                         <span>
                             <p className="products__list__costs__label">Delivery:</p>
-                            <p className="products__list__costs__price">12.99 $</p>
+                            <p className="products__list__costs__price">{this.props.delivery}</p>
                         </span>
                     </div>
                     <div className="products__list__total">

@@ -6,8 +6,6 @@
 
 
 .container{
-    margin-top: 50px;
-    margin-bottom: 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -18,6 +16,7 @@
 }
 
 .header__container{
+    margin-top: 50px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -41,16 +40,19 @@
     background-color: lightgray;
 }
 
-.order__button{
+.order__button__form{
+    margin: 75px;
     height: 48px;
     width: 196px;
     border-style: none;
     outline: none;
-    border: solid 1px black;
+    background-color: gray;
+    color: white;
     font-family: 'Lato', sans-serif;
     font-weight: 700;
     font-size: 14px;
     cursor: pointer;
+    align-self: flex-end;
 }
 
 .order__button:hover{
@@ -62,6 +64,7 @@
     justify-content: center;
     width: 100%;
     height: 100%;
+    margin-bottom: 100px;
 }
 
 .order__details{
@@ -73,6 +76,11 @@
     border-radius: 8px;
     padding-top: 20px;
     padding-left: 20px;
+}
+
+.order__details Form{
+    display: flex;
+    flex-direction: column;
 }
 
 .order__details h3{
@@ -94,31 +102,40 @@
 .order__inputs span label{
     display: flex;
     align-items: center;
-    width: 20%;
+    width: 30%;
     font-size: 15px;
     font-weight: 500;
     padding: 20px;
     text-transform: uppercase;
 }
 
-.order__inputs span input{
+.order__inputs_div{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.order__inputs_div input{
     display: flex;
     justify-content: center;
     align-items: center;
     height: 28px;
-    width: 40%;
+    width: 70%;
     border: 1px solid lightgray;
     outline: none;
     padding-left: 7px;
     font-size: 15px;
 }
 
+
+
 .order__inputs span select{
     display: flex;
     justify-content: center;
     align-items: center;
     height: 28px;
-    width: 41.5%;
+    width: 70%;
     border: 1px solid lightgray;
     outline: none;
 }
@@ -315,4 +332,11 @@
 
 .order__comment textarea:focus{
     border: solid 2px lightgray;
+}
+
+.validation {
+    margin-top: 5px;
+    font-size: 11px;
+    width: 100%;
+    color: red;
 }

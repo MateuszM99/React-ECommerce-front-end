@@ -1,9 +1,10 @@
-import React, { Component } from '../../node_modules/react'
-import '../styles/header__style.scss';
-import Cart_View from './Cart_View';
-import Login_View from './Login_View';
-import SignIn_View from './SignIn_View';
-import { Link } from "../../node_modules/react-router-dom";
+import React, { Component } from 'react'
+import '../../styles/main_styles/header__style.scss';
+import Cart_View from '../cart_components/Cart_View';
+import Login_View from '../authentication_components/Login_View';
+import SignIn_View from '../authentication_components/SignIn_View';
+import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 export class Header extends Component {
 
@@ -17,7 +18,8 @@ export class Header extends Component {
           isLoggedIn : false,
           cartCount : 0,
           categories : [],
-          error: null
+          error: null,
+          search: ''
         };
 
         this.handleCartShow = this.handleCartShow.bind(this);
@@ -49,7 +51,40 @@ export class Header extends Component {
         this.setState({isLoggedIn: false})
     }
 
+    addQuery = (key,value,searchParams) => {
+      searchParams.set(key,value);
+      return searchParams;
+    }
+  
+    removeQuery = (key,searchParams) => {
+        searchParams.delete(key);
+        return searchParams;
+    }
+
+    handleSearchChange = (e) => {
+        this.setState({search : e.target.value})
+    }
+
+    searchProduct = () => {
+      let url = this.props.location;
+      let searchParams = new URLSearchParams(url.search);
+
+        if(this.state.search == ""){
+            this.setState({search : ''});
+            searchParams = this.removeQuery("productName", searchParams);
+        } else {
+            searchParams = this.addQuery("productName", this.state.search, searchParams);
+        }
+
+        this.props.history.push({
+            pathname: url.pathname,
+            search: searchParams.toString()
+        })
+    }
+
+ 
     componentDidMount(){
+        this.handleLoggedIn();
         let cartId = localStorage.getItem("cartId");
         if(cartId == null){
             this.setState({cartCount: 0});
@@ -116,14 +151,15 @@ export class Header extends Component {
                   <img src="https://www.codester.com/static/uploads/items/000/017/17418/preview-xl.jpg" className="shop__logo"></img>
                   </div>
                   <div className="search__input">
-                  <input type="text"  placeholder="Search for your product ..."></input>      
-                  <button>Search</button>          
+                  <input type="text"  placeholder="Search for your product ..." onChange={this.handleSearchChange}></input>      
+                  <button onClick={this.searchProduct}>Search</button>          
                   </div>
                   <div className="right__header">
                   <a onClick={this.handleLoginShow} style={{display : this.state.isLoggedIn ? 'none' : 'block'}}>Log in</a>  
                   <Login_View isLoginShown={this.state.isLoginShown} onXClick={this.handleLoginShow}/>
                   <a onClick={this.handleSignInShow} style={{display : this.state.isLoggedIn ? 'none' : 'block'}}>Sign in</a>  
                   <SignIn_View isSignInShown={this.state.isSignInShown} onXClick={this.handleSignInShow}/>
+                  <a style={{display : this.state.isLoggedIn ? 'block' : 'none'}}>Some random profile</a>
                   <a onClick={this.logout} style={{display : this.state.isLoggedIn ? 'block' : 'none'}}>Logout</a>   
                   <div className="cart__div">   
                   <img src="/images/basket.png" className="header__cart" onClick={this.handleCartShow}></img>
@@ -144,4 +180,4 @@ export class Header extends Component {
     }
 }
 
-export default Header
+export default (withRouter(Header))

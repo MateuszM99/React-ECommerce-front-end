@@ -6,6 +6,7 @@
 .product__card{
     display: flex;
     flex-direction: column;
+    align-items: center;
     margin: 20px;
     width: 100%;
     height: 20%;
@@ -13,7 +14,8 @@
 }
 
 .product__card img{
-    object-fit: contain;
+    height: 400px;
+    width: 300px;
     cursor: pointer;
 }
 

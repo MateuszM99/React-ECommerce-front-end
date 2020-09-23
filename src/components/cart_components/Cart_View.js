@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import Cart_Product from './Cart_Product'
-import '../styles/cart__style.scss'
+import Cart_Product from '../cart_components/Cart_Product'
+import '../../styles/cart_styles/cart__style.scss'
+import {Link} from  "react-router-dom"
 
 export class Cart_View extends Component {
 
@@ -72,7 +73,7 @@ export class Cart_View extends Component {
                     <ul className="cart__products">
                     {cartProducts.map(cartProduct => (
                     <li key={cartProduct.product.productId}>
-                    <Cart_Product id={cartProduct.product.productId} name={cartProduct.product.productName} price={cartProduct.product.productPrice} quantity={cartProduct.quantity}/>
+                    <Cart_Product id={cartProduct.product.productId} name={cartProduct.product.productName} price={cartProduct.product.productPrice} quantity={cartProduct.quantity} image={cartProduct.product.imageUrl} size={cartProduct.option.optionName}/>
                     </li>
                     ))}
                     </ul>
@@ -82,7 +83,7 @@ export class Cart_View extends Component {
                     </div>
                     <div className="cart__order">
                     <a onClick={this.props.onCartShow}>Continue</a>
-                    <button className="order__button">Order</button>
+                    <Link to="/order" style={{ color: 'inherit', textDecoration: 'none',borderStyle: 'none'}}><button className="order__button">Order</button></Link>
                     </div>
                 </div>
             </div>

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import '../styles/product__view__header__style.scss'
-import { withRouter } from "../../node_modules/react-router-dom";
-import Payment_Method from './order_components/Payment_Method';
+import '../../styles/product_styles/product__view__header__style.scss'
+import { withRouter } from "react-router-dom";
+import Payment_Method from '../order_components/Payment_Method';
 import Slider from '@material-ui/core/Slider'
 import { withStyles } from '@material-ui/core/styles';
-import Product from './Product';
+import Product from '../product_components/Product';
 
 const styles = {
     root : {
@@ -85,10 +85,6 @@ export class Product_View_Header extends Component {
         })
     }
 
-    handleColorChange = () => {
-        
-    }
-
     handlePriceChange = (event, value) => {
         this.setState({value : value});
     };
@@ -147,13 +143,7 @@ export class Product_View_Header extends Component {
                             <option value="L">L</option>
                             <option value="XL">XL</option>
                         </select>
-                    </span>
-                    <span>
-                        <label>Color: </label>
-                        <select>
-                            <option>None</option>
-                        </select>
-                    </span>
+                    </span>                   
                     <span>
                         <label>Price: </label>
                         <button className="display__price__set__button" onClick={this.handlePriceShow}>Set price</button>

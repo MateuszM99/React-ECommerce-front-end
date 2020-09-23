@@ -1,18 +1,21 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Header from './components/Header'
-import Product from './components/Product'
-import Cart_View from './components/Cart_View'
-import Product_View from './components/Product_View';
+import Header from './components/main_components/Header'
+import Cart_View from './components/cart_components/Cart_View'
+import Product from './components/product_components/Product'
+import Product_View from './components/product_components/Product_View';
+import Product_View_Header from './components/product_components/Product_View_Header'
+import Product_View_Details from './components/product_components/Product_View_Details'
+import Order_View from './components/order_components/Order_View';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from "../node_modules/react-router-dom";
-import Order_View from './components/Order_View';
-import Product_View_Header from './components/Product_View_Header'
+
+
 
 function App() {
 
@@ -31,10 +34,14 @@ function App() {
             <Product_View_Header/>
             <Product_View/>
         </Route>   
-        <Route path="/products/:id">
+        <Route path="/products/:id" exact>
             <Header/>
             <Product_View_Header/>
-            <Product_View/>
+            <Product_View/>        
+        </Route>
+        <Route path="/products/:categoryId/:productName/:productId" exact>
+            <Header/>
+            <Product_View_Details/>
         </Route>
         <Route path="/order">
           <Order_View/>

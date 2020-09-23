@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import Product from './Product'
-import '../styles/product__view__main.scss'
-import { withRouter } from "../../node_modules/react-router-dom";
+import Product from '../product_components/Product'
+import '../../styles/product_styles/product__view__main.scss'
+import { withRouter } from "react-router-dom";
 
 export class Product_View extends Component {
     
@@ -32,8 +32,6 @@ export class Product_View extends Component {
               });
             }
           )
-
-          console.log(this.props.match.params.id);
       }
 
       /*componentDidUpdate(){
@@ -64,7 +62,7 @@ export class Product_View extends Component {
                     <ul>
                     {products.filter(product => product.category.categoryName == this.props.match.params.id).map(product => (
                     <li key={product.productId}>
-                    <Product id={product.productId} title={product.productName} price={product.productPrice} addToCart={this.addToCart}/>
+                    <Product id={product.productId} title={product.productName} price={product.productPrice} image={product.imageUrl} category={product.category.categoryName} addToCart={this.addToCart}/>
                     </li>
                     ))}
                     </ul>
