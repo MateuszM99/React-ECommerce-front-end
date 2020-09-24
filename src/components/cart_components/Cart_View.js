@@ -82,7 +82,7 @@ export class Cart_View extends Component {
                     </div>
                     <div className="cart__order">
                     <a onClick={this.props.onCartShow}>Continue</a>
-                    <Link to="/order" style={{ color: 'inherit', textDecoration: 'none',borderStyle: 'none'}}><button className="order__button">Order</button></Link>
+                    <Link to="/order" className="order__button">Order</Link>
                     </div>
                 </div>
             </div>

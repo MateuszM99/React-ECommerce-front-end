@@ -6,6 +6,10 @@ import SignIn_View from '../authentication_components/SignIn_View';
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import axios from 'axios'
+import Badge from '@material-ui/core/Badge';
+import IconButton from '@material-ui/core/IconButton';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'; 
+import { withStyles } from '@material-ui/core';
 
 export class Header extends Component {
 
@@ -162,8 +166,16 @@ export class Header extends Component {
                   <a style={{display : this.state.isLoggedIn ? 'block' : 'none'}}>Some random profile</a>
                   <a onClick={this.logout} style={{display : this.state.isLoggedIn ? 'block' : 'none'}}>Logout</a>   
                   <div className="cart__div">   
-                  <img src="/images/basket.png" className="header__cart" onClick={this.handleCartShow}></img>
-                  <p className="cart__itemsCount">{this.state.cartCount}</p>
+                  <IconButton aria-label="cart" onClick={this.handleCartShow}>
+                  <Badge badgeContent={this.state.cartCount} color="secondary"
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'right',
+                    }}
+                  >
+                    <ShoppingCartIcon />
+                  </Badge>
+                </IconButton>
                   </div> 
                   <Cart_View isCartShown={this.state.isCartShown} onCartShow={this.handleCartShow}/>
                   </div>

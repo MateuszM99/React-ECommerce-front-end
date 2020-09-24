@@ -1,13 +1,14 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Header from './components/main_components/Header'
-import Cart_View from './components/cart_components/Cart_View'
-import Product from './components/product_components/Product'
+import Header from './components/main_components/Header';
+import Cart_View from './components/cart_components/Cart_View';
+import Product from './components/product_components/Product';
 import Product_View from './components/product_components/Product_View';
-import Product_View_Header from './components/product_components/Product_View_Header'
-import Product_View_Details from './components/product_components/Product_View_Details'
+import Product_View_Header from './components/product_components/Product_View_Header';
+import Product_View_Details from './components/product_components/Product_View_Details';
 import Order_View from './components/order_components/Order_View';
+import Profile_View from './components/profile_components/Profile_View';
 import {
   BrowserRouter as Router,
   Switch,
@@ -48,6 +49,9 @@ function App() {
         </Route>
         <Route path="/checkout">
           <Order_View/>
+        </Route>
+        <Route path="/profile/:profileId">
+          <Profile_View/>
         </Route>
         <Route path="/">
           <Header/>

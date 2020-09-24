@@ -21,7 +21,7 @@ export default class SignIn_View extends Component {
                     password : '',
                  }}
                  validationSchema = {Yup.object({
-                     firstName : Yup.string()
+                    firstName : Yup.string()
                         .required('First name is required'),
                     lastName : Yup.string()
                         .required('Last name is required'),

@@ -1,0 +1,76 @@
+.profile__edit__container{
+    margin: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+.profile__edit__container h2{
+    align-self: flex-start;
+    margin-bottom: 30px;
+    color:  rgb(60, 60, 65);
+}
+
+.profile__edit__container Form{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.profile__edit__container Form div{
+    display: flex;
+    align-items: flex-start;
+}
+
+.profile__edit__container Form div span{
+    display: flex;
+    flex-direction: column;
+}
+
+.profile__edit__label{
+    align-self: flex-start;
+}
+
+.profile__edit__input {
+    margin-right: 25px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    border-style: none;
+    outline: none;
+    border: solid 1px lightgray;
+    background-color: rgb(252, 252, 252);
+    font-size: 15px; 
+    height: 30px;
+    width: 200px;
+    padding-left: 5px;
+}
+
+.profile__edit__input__width2 {
+    margin-right: 25px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    border-style: none;
+    outline: none;
+    border: solid 1px lightgray;
+    background-color: rgb(252, 252, 252);
+    font-size: 15px; 
+    height: 30px;
+    width: 430px;
+    padding-left: 5px;
+}
+
+.profile__edit__input:focus, .profile__edit__input__width2:focus{
+    border: solid 2px lightgray;
+}
+
+.profile__edit__save__button{
+    outline: none;
+    border-style:none;
+    height: 50px;
+    width: 150px;
+    background-color: rgb(60, 60, 65);
+    color: white;
+    align-self: flex-start;
+    cursor: pointer;
+}

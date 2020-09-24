@@ -94,6 +94,9 @@
 }
 
 .order__button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-style: none;
     outline: none;
     background: none;

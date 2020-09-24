@@ -5,7 +5,7 @@ export class CountrySelectList extends Component {
     render() {
         return (
             <div>
-                <Field as="select" id="country" name="country">
+                <Field as="select" className={this.props.class} id="country" name={this.props.name}>
                 <option value="Afghanistan">Afghanistan</option>
                 <option value="Åland Islands">Åland Islands</option>
                 <option value="Albania">Albania</option>

@@ -58,7 +58,7 @@ export class Order_Details extends Component {
                             <span>
                                 <label>Country:</label>
                                 <div className="order__inputs_div">
-                                <CountrySelectList/>
+                                <CountrySelectList name="country"/>
                                 </div>
                             </span>
                             <span>
