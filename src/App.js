@@ -15,7 +15,21 @@ import {
   Route,
   Link
 } from "../node_modules/react-router-dom";
+import axios from 'axios';
 
+const token = JSON.parse(localStorage.getItem('userData')).token;
+
+console.log(token);
+
+axios.interceptors.request.use(
+  config => {
+    config.headers.authorization = `Bearer ${token} `;
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
 
 
 function App() {

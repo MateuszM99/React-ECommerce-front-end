@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import '../../styles/login__signin__styles.scss';
-import PostData from '../../services/data_requests/PostData'
+import AxiosPostData from '../../services/data_requests/AxiosPostData'
 import {Formik,Form, yupToFormErrors,Field} from 'formik'
 import * as Yup from 'yup'
+import axios from 'axios';
+
 
 export default class Login_View extends Component {
 
@@ -28,12 +30,14 @@ export default class Login_View extends Component {
                     onSubmit = {(values) => {
                         setTimeout(() => {
                             if(values.username && values.password){
-                                PostData('authenticate/login',values).then((result) => {
-                                    let responseJson = result;
-                                    localStorage.setItem('userData',responseJson);
-                                    alert(responseJson);
-                                });
-                            alert(JSON.stringify(values,null,2));
+                                axios.post("https://localhost:44333/api/authenticate/login",values)
+                                .then(function(response){
+                                    console.log(response.data);
+                                    localStorage.setItem('userData',JSON.stringify(response.data));
+                                })
+                                .then(function(error){
+                                    
+                                });                                   
                             }       
                             this.props.onXClick();                    
                         },1000)
