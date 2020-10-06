@@ -1,3 +1,7 @@
+.profile__edit__main__container{
+    display: flex;
+}
+
 .profile__edit__container{
     margin: 50px;
     display: flex;
@@ -5,8 +9,14 @@
     align-items: flex-start;
 }
 
+.profile__info__container{
+    margin: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
 
-.profile__edit__container h2{
+.profile__edit__container h2,.profile__info__container h2{
     align-self: flex-start;
     margin-bottom: 30px;
     color:  rgb(60, 60, 65);
@@ -18,21 +28,35 @@
     align-items: flex-start;
 }
 
-.profile__edit__container Form div{
+.profile__edit__container Form div,.profile__info__container div{
     display: flex;
     align-items: flex-start;
 }
 
-.profile__edit__container Form div span{
+.profile__edit__container Form div span,.profile__info__container div span{
     display: flex;
     flex-direction: column;
 }
 
-.profile__edit__label{
+.profile__edit__label,.profile__info__label{
     align-self: flex-start;
 }
 
-.profile__edit__input {
+.profile__edit__input__width0 {
+    margin-right: 25px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    border-style: none;
+    outline: none;
+    border: solid 1px lightgray;
+    background-color: rgb(252, 252, 252);
+    font-size: 15px; 
+    height: 30px;
+    width: 100px;
+    padding-left: 5px;
+}
+
+.profile__edit__input_width1 {
     margin-right: 25px;
     margin-bottom: 20px;
     margin-top: 10px;
@@ -64,6 +88,48 @@
     border: solid 2px lightgray;
 }
 
+.profile__info__text {
+    display: flex;
+    align-items: center;
+    margin-right: 25px;
+    margin-bottom: 20px;
+    margin-top: 10px;   
+    font-size: 15px; 
+    border: solid 1px lightgray;
+    background-color: rgb(252, 252, 252);
+    height: 30px;
+    width: 200px;
+    padding-left: 5px;
+}
+
+.profile__info__text2 {
+    display: flex;
+    align-items: center;
+    margin-right: 25px;
+    margin-bottom: 20px;
+    margin-top: 10px;   
+    font-size: 15px; 
+    border: solid 1px lightgray;
+    background-color: rgb(252, 252, 252);
+    height: 30px;
+    width: 430px;
+    padding-left: 5px;
+}
+
+.profile__info__text0{
+    display: flex;
+    align-items: center;
+    margin-right: 25px;
+    margin-bottom: 20px;
+    margin-top: 10px;   
+    font-size: 15px; 
+    border: solid 1px lightgray;
+    background-color: rgb(252, 252, 252);
+    height: 30px;
+    width: 100px;
+    padding-left: 5px;
+}
+
 .profile__edit__save__button{
     outline: none;
     border-style:none;
@@ -73,4 +139,13 @@
     color: white;
     align-self: flex-start;
     cursor: pointer;
+}
+
+.edit-validation{
+    margin-top: 5px;
+    font-size: 12px;
+    width: 60%;
+    color: red;
+    display: flex;
+    justify-content: flex-start;
 }

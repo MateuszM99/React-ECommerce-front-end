@@ -1,14 +1,21 @@
 import React, { Component } from 'react'
 import '../../styles/order_styles/order__style.scss'
-import Products_List from '../order_components/Products_List'
-import Delivery_Method from '../order_components/Delivery_Method'
-import Payment_Method from '../order_components/Payment_Method'
-import Order_Inputs from '../order_components/Order_Inputs'
+import Products_List from './Products_List'
+import Order_Inputs from './Order_Inputs'
 import {Formik,Form, yupToFormErrors,Field} from 'formik'
 import * as Yup from 'yup'
-import { withRouter,Link } from "react-router-dom";
-
-const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+import { withRouter,Link,useHistory,Redirect } from "react-router-dom";
+import axios from 'axios'
+import { makeStyles } from '@material-ui/core/styles';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import Button from '@material-ui/core/Button';
+import validationSchema from './validationSchema'
+import UserInfoForm from './UserInfoForm'
+import AddressForm from './AddressForm'
+import PaymentDeliveryForm from './PaymentDeliveryForm'
+import ReviewOrder from './ReviewOrder'
 
 export class Order_View extends Component {
 
@@ -16,91 +23,132 @@ export class Order_View extends Component {
         super(props)
 
         this.state = {
-            delivery : ''
+            activeStep : 2,
+            delivery : null,
+            payment : null
         }
     }
 
+    handleDeliveryChange = (e) => {
+        this.setState({delivery : e.target.value});
+    } 
+
+    handlePaymentChange = (e) => {
+        this.setState({payment : e.target.value});
+    } 
+
+    renderStepContent = (step,errors,touched) => {
+        switch(step){
+        case 0:
+            return (
+                <UserInfoForm errors={errors} touched={touched}/>
+            )
+        case 1: 
+            return (
+                <AddressForm errors={errors} touched={touched}/>
+            )  
+        case 2:
+            return(
+                <PaymentDeliveryForm 
+                delivery={this.state.delivery} 
+                payment={this.state.payment} 
+                handleDeliveryChange={this.handleDeliveryChange} 
+                handlePaymentChange={this.handlePaymentChange} 
+                errors={errors} touched={touched}
+                />
+            )
+        case 3:
+            return(
+                <ReviewOrder/>
+            )      
+        }
+    }
+
+    handleSumbit = (values,actions) => {
+        alert(JSON.stringify(values,null,2));
+        this.setState({activeStep : this.state.activeStep + 1})
+    }
+
+    handleBack = () => {
+        this.setState({activeStep : this.state.activeStep - 1})
+    }
+
+
+
     render() {
+        const {activeStep} = this.state;
+        const steps = ['Select master blaster campaign settings', 'Create an ad group', 'Create an ad'];
+        const isLastStep = activeStep === steps.length - 1;
+        const currentValidationSchema = validationSchema[activeStep];
         return (
-                <div className="container">
-                    <div className="header__container">
+                <div className="order__container">
+                    <div className="order__header__container">
                         <Link to="/"><button className="back__button">Back to shop</button></Link>
                     </div>
-                    <div className="main__container">
-                        <div className="order__details">
-                            <Formik         
-                                initialValues={{
-                                    email : '',
-                                    name : '',
-                                    lastName :'',
-                                    street : '',
-                                    houseNumber : '',
-                                    postCode : '',
-                                    city : '',
-                                    country : '',
-                                    phone : '',
-                                    delivery_method : this.state.delivery,
-                                    payment_method : '',
-                                }}
-                                validationSchema={Yup.object({
-                                    name : Yup.string()
-                                        .min(2,'Must be at least 2 characters')
-                                        .required('Name is required'),
-                                    email : Yup.string()
-                                        .email('Invalid email')
-                                        .required('Email is required'),
-                                    lastName : Yup.string()
-                                            .required('Last name is required'),
-                                    street : Yup.string()
-                                        .required('Street is required'),
-                                    houseNumber : Yup.string()
-                                        .required('House number is required'),
-                                    postCode : Yup.string()
-                                        .required('Post code is required'),
-                                    city : Yup.string()
-                                        .required('City is required'),
-                                    country : Yup.string()
-                                        .required('You must choose country'),
-                                    phone : Yup.string()
-                                        .matches(phoneRegExp, 'Phone number is not valid')
-                                        .required('Phone number is required'),
-                                    delivery_method : Yup.string()
-                                        .required('You must choose delivery method'),
-                                    payment_method : Yup.string()
-                                        .required('You must choose a payment method'),
-                                })}
-
-                                onSubmit = {(values,{setSubmiting}) => {
-                                    setTimeout(() => {
-                                        alert(JSON.stringify(values,null,2));
-                                        setSubmiting(false);
-                                    },3000)
-                                }}                            
-                            >
-                            {({ errors, touched,values }) => (
-                                <Form>
-                                <h3>1. Order details</h3>                              
-                                <Order_Inputs errors={errors} touched={touched}/>
-                                <h3>2. Delivery method</h3>
-                                <div className="delivery__inputs">       
-                                    <Delivery_Method value={"1"}/>
-                                    <Delivery_Method value={"2"}/>                                   
-                                </div>
-                                {errors.delivery_method && touched.delivery_method ? <div className="validation">{errors.delivery_method}</div> : null}
-                                <h3>3. Payment method</h3>
-                                <div className="payment__inputs">
-                                    <Payment_Method value={"1"}/>
-                                    <Payment_Method value={"2"}/>
-                                </div>
-                                {errors.payment_method && touched.payment_method ? <div className="validation">{errors.payment_method}</div> : null}
-                                <button className="order__button__form" type="submit">Order</button>
-                                </Form>
-                            )}
-                            </Formik>
-                        </div>   
-                        <Products_List delivery={this.state.delivery}/>
-                    </div>
+                    <div className="order__main__container">
+                        <div className="order__main__container__forms">
+                            <div>
+                            <Stepper activeStep={activeStep} alternativeLabel>
+                                {steps.map((label) => (
+                                <Step key={label}>
+                                    <StepLabel>{label}</StepLabel>
+                                </Step>
+                                ))}
+                            </Stepper>
+                         </div>
+                             <Formik         
+                                 initialValues={{
+                                     email : '',
+                                     name : '',
+                                     lastName :'',
+                                     street : '',
+                                     houseNumber : '',
+                                     postCode : '',
+                                     city : '',
+                                     country : '',
+                                     phone : '',
+                               delivery_method : '',
+                               payment_method : '',
+                           }}
+                           validationSchema={null}
+                           
+                           onSubmit={this.handleSumbit}
+                       /* onSubmit = {(values) => {
+                               setTimeout(() => {      
+                                   if(values != null){
+                                       let cartId = localStorage.getItem("cartId");
+                                       axios.post("https://localhost:44333/api/order/createOrder?cartId=" + cartId + "&deliveryId=" + values.delivery_method + "&paymentId=" + values.payment_method,values)
+                                           .then(function(response){
+                                               localStorage.setItem('orderId',response.data.orderId);
+                                               
+                                               console.log(response.data);
+                                           })
+                                           .then(function(error){
+                                               console.log(error);
+                                       });  
+                                   }                             
+                                   alert(JSON.stringify(values,null,2));
+                               },3000)
+                           }
+                           
+                       }  */                         
+                       >
+                       {({ errors, touched}) => (
+                           <Form>
+                           <div className="form">
+                               {this.renderStepContent(activeStep,errors,touched)}
+                               <div className="form_buttons">
+                                <button className="form__button__step" onClick={this.handleBack} type="button">Previous</button>
+                                <button className="form__button__step" type="submit">Next</button>
+                               </div>
+                           </div>
+                           </Form>
+                       )}
+                       </Formik>
+                    </div>   
+                    <Products_List delivery={this.state.delivery}/>
                 </div>
+            </div>
         )
     }
 }

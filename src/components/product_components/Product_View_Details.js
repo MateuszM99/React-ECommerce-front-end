@@ -19,7 +19,6 @@ export class Product_View_Details extends Component {
     }
 
     componentDidMount(){
-        console.log(this.props.match)
         fetch("https://localhost:44333/api/products/getProduct?productCategory=" + this.props.match.params.categoryId + "&productName=" + this.props.match.params.productName + "&productId=" + this.props.match.params.productId)
           .then(res => res.json())
           .then(

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 export class Products_List extends Component {
 
@@ -23,27 +24,30 @@ export class Products_List extends Component {
 
     componentDidMount() {
         let cartId = localStorage.getItem("cartId");
-        fetch("https://localhost:44333/api/cart/getCart?cartId=" + cartId)
-          .then(res => res.json())
+        axios.get("https://localhost:44333/api/cart/getCart?cartId=" + cartId)
           .then(
-            (result) => {
+            result => {
               this.setState({
                 isLoaded: true,
-                cartProducts: result
-              });
-            },
-            (error) => {
+                cartProducts: result.data
+              })
+            })
+            .catch(error => {
               this.setState({
                 isLoaded: true,
                 error
               });
-            }
-          )
-      }
+            })       
+    }
 
 
     render() {
         const { error, isLoaded, cartProducts } = this.state;
+        if(error){
+            return(
+                <div>Could not load content</div>
+            )
+        }
         if(isLoaded == false){
             return(
                 <div>Loading</div>

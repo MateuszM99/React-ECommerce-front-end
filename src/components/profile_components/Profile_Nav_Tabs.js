@@ -21,11 +21,11 @@ export class Profile_Nav_Tabs extends Component {
     render() {
         return (
             <nav className="profile__nav__tabs">
-                <Link to="/profile/:profileId/edit" className="profile__nav__tabs__tab clicked" onClick={() => this.onTabClick(0)}>
+                <Link to="/profile/edit" className="profile__nav__tabs__tab" onClick={() => this.onTabClick(0)}>
                     <EditIcon style={{ paddingLeft: '25px' }}/>
                     <p className="profile__nav__tabs__tab__text">Edit profile</p>
                 </Link>
-                <Link to="/profile/:profileId/address" className="profile__nav__tabs__tab" onClick={() => this.onTabClick(1)}>
+                <Link to="/profile/address" className="profile__nav__tabs__tab" onClick={() => this.onTabClick(1)}>
                     <LocalPostOfficeIcon style={{ paddingLeft: '25px' }}/>
                     <p className="profile__nav__tabs__tab__text">Set address</p>
                 </Link>

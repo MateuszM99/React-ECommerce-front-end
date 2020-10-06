@@ -1,16 +1,27 @@
-import PostData from '../data_requests/PostData'
-
+import { toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+import axios from 'axios'
 
 export default function AddToCart(productId,quantity=1,sizeOption="S"){
     if(localStorage.getItem("cartId") == null){
-        PostData("cart/addCart?productId=" + productId + "&quantity=" + quantity + "&optionName=" + sizeOption,null).then((result) => {
-            let responseJson = result;    
-            localStorage.setItem("cartId",responseJson.id);      
-        });
+        axios.post("https://localhost:44333/api/authenticate/cart/addCart?productId=" + productId + "&quantity=" + quantity + "&optionName=" + sizeOption,null)
+            .then(response => {
+                localStorage.setItem("cartId",response.data.id);
+                toast.dark(response.data.successMessage)
+            })
+            .catch(error => {
+                toast.warning(error.response.data.errorMessage)
+            });
     }
     else {
         let cartId = localStorage.getItem("cartId");
-        PostData("cart/addCart?cartId=" + cartId  + "&productId=" + productId + "&quantity=" + quantity + "&optionName=" + sizeOption,null)
+        axios.post("https://localhost:44333/api/authenticate/cart/addCart?cartId=" + cartId  + "&productId=" + productId + "&quantity=" + quantity + "&optionName=" + sizeOption,null)
+            .then(response => {
+                toast.dark(response.data.successMessage)
+            })
+            .catch(error => {
+                toast.warning(error.response.data.errorMessage)
+            });
     }
-
 }
+

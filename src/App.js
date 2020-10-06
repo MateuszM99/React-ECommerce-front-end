@@ -9,6 +9,9 @@ import Product_View_Header from './components/product_components/Product_View_He
 import Product_View_Details from './components/product_components/Product_View_Details';
 import Order_View from './components/order_components/Order_View';
 import Profile_View from './components/profile_components/Profile_View';
+import CheckLogin from './components/authentication_components/CheckLogin'
+import Login_View from './components/authentication_components/Login_View';
+import SignUp_View from './components/authentication_components/SignUp_View';
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,34 +19,49 @@ import {
   Link
 } from "../node_modules/react-router-dom";
 import axios from 'axios';
-
-const token = JSON.parse(localStorage.getItem('userData')).token;
-
-console.log(token);
-
-axios.interceptors.request.use(
-  config => {
-    config.headers.authorization = `Bearer ${token} `;
-    return config;
-  },
-  error => {
-    return Promise.reject(error);
-  }
-);
-
+import { toast,ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+import Login from './components/authentication_components/Login';
+import SignUp from './components/authentication_components/SignUp';
 
 function App() {
+
+  if(localStorage.getItem('userData') != null){
+  const userData = JSON.parse(localStorage.getItem('userData'));
+
+    axios.interceptors.request.use(
+      config => {
+        config.headers.authorization = `Bearer ${userData.token} `;
+        return config;
+      },
+      error => {
+        return Promise.reject(error);
+      }
+    );
+  }
+
 
   return (
     <Router>
     <div className="App">
-      {/* http://localhost:3000/news */}
-      {/* http://localhost:3000/clothing */}
-      {/* http://localhost:3000/shoes */}
-      {/* http://localhost:3000/accessories */}
-      {/* http://localhost:3000/order */}
-      {/* http://localhost:3000/checkout */}
+    <ToastContainer
+      position="top-right"
+      autoClose={2000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+    />
       <Switch>
+        <Route path="/login">
+          <Login_View/>
+        </Route>
+        <Route path="/signup">
+          <SignUp_View/>
+        </Route>
         <Route path="/products" exact>
             <Header/>
             <Product_View_Header/>
@@ -58,13 +76,16 @@ function App() {
             <Header/>
             <Product_View_Details/>
         </Route>
-        <Route path="/order">
+        <Route path="/order" exact>
           <Order_View/>
         </Route>
-        <Route path="/checkout">
+        <Route path="/order/confirm" exact>
           <Order_View/>
         </Route>
-        <Route path="/profile/:profileId">
+        <Route path="/checkLogin">
+          <CheckLogin/>
+        </Route>
+        <Route path="/profile">
           <Profile_View/>
         </Route>
         <Route path="/">

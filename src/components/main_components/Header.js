@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import '../../styles/main_styles/header__style.scss';
 import Cart_View from '../cart_components/Cart_View';
-import Login_View from '../authentication_components/Login_View';
-import SignIn_View from '../authentication_components/SignIn_View';
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import axios from 'axios'
@@ -10,6 +8,13 @@ import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'; 
 import { withStyles } from '@material-ui/core';
+import { toast,ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+
+if(localStorage.getItem('userData') != null){
+  var userData = JSON.parse(localStorage.getItem('userData'));
+}
+
 
 export class Header extends Component {
 
@@ -46,7 +51,7 @@ export class Header extends Component {
 
     handleLoggedIn = () => {
         console.log(localStorage.getItem("userData"))
-        if(localStorage.getItem("userData"))
+        if(localStorage.getItem("userData") != null)
         this.setState({isLoggedIn : true})
     }
 
@@ -159,11 +164,9 @@ export class Header extends Component {
                   <button onClick={this.searchProduct}>Search</button>          
                   </div>
                   <div className="right__header">
-                  <a onClick={this.handleLoginShow} style={{display : this.state.isLoggedIn ? 'none' : 'block'}}>Log in</a>  
-                  <Login_View isLoginShown={this.state.isLoginShown} onXClick={this.handleLoginShow}/>
-                  <a onClick={this.handleSignInShow} style={{display : this.state.isLoggedIn ? 'none' : 'block'}}>Sign in</a>  
-                  <SignIn_View isSignInShown={this.state.isSignInShown} onXClick={this.handleSignInShow}/>
-                  <a style={{display : this.state.isLoggedIn ? 'block' : 'none'}}>Some random profile</a>
+                  <Link style={{display : this.state.isLoggedIn ? 'none' : 'block'}} to="/login">Log in</Link>                
+                  <Link style={{display : this.state.isLoggedIn ? 'none' : 'block'}} to="/signup">Sign up</Link>                    
+                  <Link style={{display : this.state.isLoggedIn ? 'block' : 'none'}} to="/profile">{userData ? userData.user.userName : null}</Link>
                   <a onClick={this.logout} style={{display : this.state.isLoggedIn ? 'block' : 'none'}}>Logout</a>   
                   <div className="cart__div">   
                   <IconButton aria-label="cart" onClick={this.handleCartShow}>
@@ -173,9 +176,9 @@ export class Header extends Component {
                       horizontal: 'right',
                     }}
                   >
-                    <ShoppingCartIcon />
+                  <ShoppingCartIcon />
                   </Badge>
-                </IconButton>
+                  </IconButton>
                   </div> 
                   <Cart_View isCartShown={this.state.isCartShown} onCartShow={this.handleCartShow}/>
                   </div>

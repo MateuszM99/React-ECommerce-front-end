@@ -12,13 +12,13 @@ export class Profile_View extends Component {
             <div className="profile__view__main">
                 <Profile_Header/>
                 <div className="profile__view__main__tab">
-                <Profile_Nav_Tabs/>
-                <Route path="/profile/:profileId/edit">
-                <Profile_Edit/>
-                </Route>
-                <Route path="/profile/:profileId/address">
-                <Profile_Address/>
-                </Route>
+                    <Profile_Nav_Tabs/>
+                    <Route path="/profile/edit" exact>
+                    <Profile_Edit/>
+                    </Route>
+                    <Route path="/profile/address" exact>
+                    <Profile_Address/>
+                    </Route>
                 </div>
             </div>
         )

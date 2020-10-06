@@ -13,7 +13,8 @@ export class Cart_View extends Component {
 
         this.state = {
           error: null,
-          cartProducts: []
+          cartProducts: [],
+          isLoggedIn : false
         };
       }
 
@@ -61,7 +62,7 @@ export class Cart_View extends Component {
       }*/
 
     render() {
-        const { error, isLoaded, cartProducts } = this.state;
+        const { error, isLoaded, cartProducts,isLoggedIn } = this.state;
         return (
             <div className="popup" style={{display : this.props.isCartShown ? 'block' : 'none',opacity : this.props.isCartShown ? '1' : '0'}}>
                 <div className="cart__view">
@@ -82,7 +83,10 @@ export class Cart_View extends Component {
                     </div>
                     <div className="cart__order">
                     <a onClick={this.props.onCartShow}>Continue</a>
-                    <Link to="/order" className="order__button">Order</Link>
+                    { isLoggedIn ? 
+                    <Link to="/order" className="order__button">Order</Link> :
+                    <Link to="/checkLogin" className="order__button">Order</Link>
+                    }
                     </div>
                 </div>
             </div>

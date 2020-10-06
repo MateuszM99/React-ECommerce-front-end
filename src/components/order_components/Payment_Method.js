@@ -3,11 +3,27 @@ import React, { Component } from 'react'
 
 
 export class Payment_Method extends Component {
+   
+    constructor(props){
+        super(props);
+
+    }
+
+
+
     render() {
+        let isChecked;
+        if(this.props.payment == this.props.value){
+        isChecked = true;
+        } else {
+        isChecked = false;    
+        }
         return (
-            <div className="payment__inputs__input">
-                <Field type="radio" name="payment_method" value={this.props.value}></Field>
+            <div className="order__form__payment__inputs__input" style={isChecked ? {backgroundColor:"white",border:"solid 1px lightgray"} : {backgroundColor:"#f4f4f4",fontWeight:"400"}}>
+                <Field type="radio" name="payment_method" value={this.props.value} checked={isChecked} onChange={this.props.handlePaymentChange}></Field>
+                <div>
                 <p>Za pobraniem</p>
+                </div>
             </div>
         )
     }
