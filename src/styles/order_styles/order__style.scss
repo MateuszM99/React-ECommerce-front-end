@@ -122,14 +122,12 @@
 
 .order__form__inputs__row_input_width{
     display: flex;
-    justify-content: center;
     align-items: center;
     height: 35px;
-    width: var(--width);
     border: 1px solid lightgray;
     outline: none;
     padding-left: 7px;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 
@@ -142,40 +140,19 @@
     border: 1px solid lightgray;
     outline: none;
     padding-left: 7px;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .order__form__inputs__row_input_width2{
     display: flex;
-    justify-content: center;
     align-items: center;
     height: 35px;
     width: 590px;
     border: 1px solid lightgray;
     outline: none;
     padding-left: 7px;
-    font-size: 15px;
+    font-size: 16px;
 }
-
-.order__inputs_div{
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-}
-
-.order__inputs_div input{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 28px;
-    width: 70%;
-    border: 1px solid lightgray;
-    outline: none;
-    padding-left: 7px;
-    font-size: 15px;
-}
-
-
 
 .order__form__inputs__row_input_select{
     display: flex;
