@@ -21,7 +21,7 @@ export class Cart_View extends Component {
       getCartPrice = () => {
         var totalCartPrice = 0;
         this.state.cartProducts.forEach(cartProduct => {
-            totalCartPrice += cartProduct.product.productPrice * cartProduct.quantity;
+            totalCartPrice += cartProduct.product.price * cartProduct.quantity;
         });
 
         return totalCartPrice;
@@ -72,14 +72,14 @@ export class Cart_View extends Component {
                     </div>
                     <ul className="cart__products">
                     {cartProducts.map(cartProduct => (
-                    <li key={cartProduct.product.productId}>
-                    <Cart_Product id={cartProduct.product.productId} name={cartProduct.product.productName} price={cartProduct.product.productPrice} quantity={cartProduct.quantity} image={cartProduct.product.imageUrl} size={cartProduct.option.optionName}/>
+                    <li key={cartProduct.product.id}>
+                    <Cart_Product id={cartProduct.product.id} name={cartProduct.product.name} price={cartProduct.product.price} quantity={cartProduct.quantity} image={cartProduct.product.imageUrl} size={cartProduct.option.name}/>
                     </li>
                     ))}
                     </ul>
                     <div className="cart__total">
                     <p>Total price :</p>
-                    <p>{this.getCartPrice()}</p>
+                    <p>{this.getCartPrice()} PLN</p>
                     </div>
                     <div className="cart__order">
                     <a onClick={this.props.onCartShow}>Continue</a>

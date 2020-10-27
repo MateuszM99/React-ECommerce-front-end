@@ -8,12 +8,13 @@ export default function RemoveItemFromCart(productId){
         }
     else {
         let cartId = localStorage.getItem("cartId");
-        axios.post("https://localhost:44333/api/authenticate/cart/removeCart?cartId=" + cartId  + "&productId=" + productId,null)
+        axios.post("https://localhost:44333/api/cart/removeCart?cartId=" + cartId  + "&productId=" + productId,null)
             .then(response =>{
-                toast.dark(response.data.successMessage);
+                console.log(response);
+                toast.dark(response.data.message);
             })
             .catch(error => {
-                toast.warning(error.response.data.errorMessage)
+                toast.warning(error.response.data)
             })
     }
 }

@@ -23,6 +23,8 @@ import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import Login from './components/authentication_components/Login';
 import SignUp from './components/authentication_components/SignUp';
+import Content_Management_Main from './components/content_management_components/CM_Main'
+import PrivateRoute from './PrivateRoute';
 
 function App() {
 
@@ -72,7 +74,7 @@ function App() {
             <Product_View_Header/>
             <Product_View/>        
         </Route>
-        <Route path="/products/:categoryId/:productName/:productId" exact>
+        <Route path="/products/:categoryId/:productId" exact>
             <Header/>
             <Product_View_Details/>
         </Route>
@@ -85,8 +87,9 @@ function App() {
         <Route path="/checkLogin">
           <CheckLogin/>
         </Route>
-        <Route path="/profile">
-          <Profile_View/>
+        <PrivateRoute path="/profile" component={Profile_View}>
+        </PrivateRoute>
+        <Route path="/manage" component={Content_Management_Main}>
         </Route>
         <Route path="/">
           <Header/>

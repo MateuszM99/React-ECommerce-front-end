@@ -195,43 +195,23 @@ export class Order_View extends Component {
                                 ))}
                             </Stepper>
                          </div>
-                             <Formik         
-                                 initialValues={{
-                                     email : '',
-                                     name : '',
-                                     lastName :'',
-                                     street : '',
-                                     houseNumber : '',
-                                     postCode : '',
-                                     city : '',
-                                     country : '',
-                                     phone : '',
-                               delivery_method : '',
-                               payment_method : '',
-                           }}
-                           validationSchema={currentValidationSchema}
-                           
-                           onSubmit={this.handleSumbit}
-                       /* onSubmit = {(values) => {
-                               setTimeout(() => {      
-                                   if(values != null){
-                                       let cartId = localStorage.getItem("cartId");
-                                       axios.post("https://localhost:44333/api/order/createOrder?cartId=" + cartId + "&deliveryId=" + values.delivery_method + "&paymentId=" + values.payment_method,values)
-                                           .then(function(response){
-                                               localStorage.setItem('orderId',response.data.orderId);
-                                               
-                                               console.log(response.data);
-                                           })
-                                           .then(function(error){
-                                               console.log(error);
-                                       });  
-                                   }                             
-                                   alert(JSON.stringify(values,null,2));
-                               },3000)
-                           }
-                           
-                       }  */                         
-                       >
+                            <Formik         
+                                initialValues={{
+                                    email : '',
+                                    name : '',
+                                    lastName :'',
+                                    street : '',
+                                    houseNumber : '',
+                                    postCode : '',
+                                    city : '',
+                                    country : '',
+                                    phone : '',
+                                    delivery_method : '',
+                                    payment_method : '',
+                                }}
+                                validationSchema={currentValidationSchema}                               
+                                onSubmit={this.handleSumbit}                    
+                            >
                        {({ errors, touched,isSubmitting}) => (
                            <Form>
                            <div className="form">

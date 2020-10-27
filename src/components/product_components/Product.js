@@ -11,7 +11,7 @@ export class Product extends Component{
             <div className="product__card">
                 <img src={this.props.image} alt=""></img>
                 <div className="product__details">
-                <Link to={`/products/${this.props.category}/${this.props.title}/${this.props.id}`}>{this.props.title}</Link>
+                <Link to={`/products/${this.props.category}/${this.props.id}`}>{this.props.title}</Link>
                 <p>{this.props.price} zł</p>
                 <button className="add__toCart" onClick={() => AddToCart(this.props.id)}>Add to cart</button>
                 </div>

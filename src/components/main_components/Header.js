@@ -185,8 +185,8 @@ export class Header extends Component {
               </div>
               <div className="main__categories">
                 {categories.map(category => (
-                  <a key={category.categoryId}>
-                    <Link to={`/products/${category.categoryName}`} style={{ textDecoration: 'none' }}>{category.categoryName}</Link>
+                  <a key={category.id}>
+                    <Link to={`/products/${category.name}`} style={{ textDecoration: 'none' }}>{category.name}</Link>
                   </a>
                 ))}
               </div>

@@ -13,16 +13,17 @@ export class Product_View_Details extends Component {
             product : null,
             isLoaded : false,
             error : null,
-            quantity : 0,
-            size : null,
+            quantity : 1,
+            size : 'S',
         }
     }
 
     componentDidMount(){
-        fetch("https://localhost:44333/api/products/getProduct?productCategory=" + this.props.match.params.categoryId + "&productName=" + this.props.match.params.productName + "&productId=" + this.props.match.params.productId)
+        fetch("https://localhost:44333/api/products/getProduct?productId=" + this.props.match.params.productId)
           .then(res => res.json())
           .then(
             (result) => {
+            console.log(result)
               this.setState({
                 isLoaded: true,
                 product: result
@@ -63,18 +64,18 @@ export class Product_View_Details extends Component {
                     <div className="product__details__info__nav">
                         <Link style={{ textDecoration: 'none'}} to="/">Shop</Link>
                         <span>/</span>
-                        <Link style={{ textDecoration: 'none' }} to={`/${this.product.productCategory.categoryName}`}>{this.product.productCategory.categoryName}</Link>
+                        <Link style={{ textDecoration: 'none' }} to={`/${this.state.product.categoryName}`}>{this.state.product.categoryName}</Link>
                         <span>/</span>
                         <p>{this.state.product.productName}</p>
                     </div>
                     <div className="product__details__info__header">
-                        <h2>{this.state.product.productName}</h2>
-                        <p>{this.state.product.productPrice}</p>
+                        <h2>{this.state.product.name}</h2>
+                        <p>{this.state.product.price}</p>
                     </div>
                     <div className="product__details__info__select">
                         <span>
                             <p>Size</p>
-                            <select value={this.state.size} onChange={this.handleSizeChange()}>
+                            <select value={this.state.size} onChange={this.handleSizeChange}>
                                 <option value="XS">XS</option>
                                 <option value="S">S</option>
                                 <option value="M">M</option>
@@ -82,8 +83,8 @@ export class Product_View_Details extends Component {
                                 <option value="XL">XL</option>
                             </select>
                         </span>
-                        <input type="text" value="1" onChange={this.handleQuantityChange()}></input>
-                        <button onClick={()=> AddToCart(this.state.product.productId,this.state.quantity,this.state.size)}>Add to cart</button>
+                        <input type="text" value={this.state.quantity} onChange={this.handleQuantityChange}></input>
+                        <button onClick={()=> AddToCart(this.state.product.id,this.state.quantity,this.state.size)}>Add to cart</button>
                     </div>
                     <div className="product__details__info__characteristics">
                         <p>Characteristics:</p>
