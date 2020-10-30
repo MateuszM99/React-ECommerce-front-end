@@ -8,8 +8,9 @@ function Products_Management() {
 
     const [products,setProducts] = useState([]);
     const [error,setError] = useState(null);
+    const [searchString,setSearchString] = useState("");
 
-    useEffect(() => {
+    const getProductsData = () => {
         axios.get("https://localhost:44333/api/products/getProducts")
         .then(function(response){
             console.log(response.data);
@@ -17,15 +18,28 @@ function Products_Management() {
         })
         .catch(function(error){
           setError(error)
-        })  
-    })
+        })
+    }
+
+    useEffect(() => {
+        getProductsData(); 
+    },[])
+
+    const deleteProduct = (productId) => {
+        axios.post("https://localhost:44333/api/products/deleteProduct?productId=" + productId)
+        .then(getProductsData);
+    }
+
+    const handleSearchChange = (e) => {
+        setSearchString(e.target.value)
+    }
 
     return (
         <div className="cm__products__container">
             <div className="cm__products__container__filter">
                 <Link to="/manage/products/addProduct">Add product</Link>
                 <label>Search : </label>
-                <input></input>
+                <input onChange={handleSearchChange}></input>
             </div>
             <table>
                 <thead>
@@ -42,8 +56,10 @@ function Products_Management() {
                     </tr>
                 </thead>
                 <tbody>
-                {products.map(product => (
-                <Product_tr key={product.id} id={product.id} image={product.imageUrl} name={product.name} category={product.categoryName} sku={product.sku} price={product.price}/>
+                {products
+                .filter(product => product.name.toLowerCase().includes(searchString.toLowerCase()) || product.id.toString().includes(searchString) || product.sku.toLowerCase().includes(searchString.toLowerCase()) || product.categoryName.toLowerCase().includes(searchString.toLowerCase()))
+                .map(product => (
+                <Product_tr key={product.id} id={product.id} image={product.imageUrl} name={product.name} category={product.categoryName} sku={product.sku} price={product.price} delete={deleteProduct}/>
                 ))}
                 </tbody>
             </table>

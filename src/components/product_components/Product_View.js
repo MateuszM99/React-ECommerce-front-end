@@ -11,30 +11,13 @@ export class Product_View extends Component {
         this.state = {
           error: null,
           isLoaded: false,
-          products: []
+          products: [],
+          searchQuery : "",
         };
       }
 
-      componentDidMount() {
-        fetch("https://localhost:44333/api/products/getProducts" + this.props.location.search)
-          .then(res => res.json())
-          .then(
-            (result) => {
-              this.setState({
-                isLoaded: true,
-                products: result
-              });
-            },
-            (error) => {
-              this.setState({
-                isLoaded: true,
-                error
-              });
-            }
-          )
-      }
-
-      /*componentDidUpdate(){
+      getProductsData = () => {
+        this.setState({searchQuery : this.props.location.search});
         fetch("https://localhost:44333/api/products/products" + this.props.location.search)
           .then(res => res.json())
           .then(
@@ -51,7 +34,16 @@ export class Product_View extends Component {
               });
             }
           )
-      }*/
+      }
+
+      componentDidMount() {
+        this.getProductsData();
+      }
+
+      componentDidUpdate(){
+        if(this.state.searchQuery != this.props.location.search)
+        this.getProductsData();
+      }
       
 
     render() {
@@ -60,7 +52,7 @@ export class Product_View extends Component {
             <section id="products__list">
                 <div className="product__main">
                     <ul>
-                    {products.filter(product => product.categoryName == this.props.match.params.id).map(product => (
+                    {products.map(product => (
                     <li key={product.id}>
                     <Product id={product.id} title={product.name} price={product.price} image={product.imageUrl} category={product.categoryName} addToCart={this.addToCart}/>
                     </li>

@@ -16,15 +16,18 @@ function Product_Options_Stock(props) {
     const [num,setNum] = useState(0);
     const [selectedOption,setSelectedOption] = useState(null);
 
-    useEffect(() => {
+    const getProductData = () => {
         axios.get("https://localhost:44333/api/products/getProduct?productId=" + id)
         .then(function(response){
             setProduct(response.data)
         })
         .catch(function(error){
           setError(error)
-        })  
-        
+        }) 
+    }
+
+    useEffect(() => {
+        getProductData();        
         axios.get("https://localhost:44333/api/products/getOptions")
         .then(function(response){
             setAvailableOptions(response.data)
@@ -32,22 +35,24 @@ function Product_Options_Stock(props) {
         .catch(function(error){
           setError(error)
         })
-    })
+    },[])
 
-    function handleOptionChange(e){
+    const handleOptionChange = (e) => {
+        console.log(e.target.value)
         setSelectedOption(e.target.value)
     }
 
-    function addOption(optionId){
-        alert(optionId)
-        axios.post("https://localhost:44333/api/products/addOptionToProduct?productId=" + id + "&optionId" + optionId);
+    const addOption = (optionId) => {
+        console.log('add option')
+        axios.post("https://localhost:44333/api/products/addOptionToProduct?productId=" + id + "&optionId" + optionId)
+        .then(getProductData);
     }
 
-    function addToStock(){
+    const addToStock = () => {
         console.log(num);
     }
 
-    function handleNumChange(e){
+    const handleNumChange = (e) => {
         setNum(e.target.value)
     }
 
@@ -64,7 +69,7 @@ function Product_Options_Stock(props) {
                     <option value={option.id}>{option.name}</option>
                 ))}
             </select>
-            <button onClick={addOption({selectedOption})}>Add Option</button>
+            <button onClick={() => addOption(selectedOption)}>Add Option</button>
             </div>
             <div className="cm__products__option__stock__container__product">
             <h2>{product.name}</h2>

@@ -10,6 +10,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { withStyles } from '@material-ui/core';
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import PaymentDeliveryForm from '../order_components/PaymentDeliveryForm';
 
 if(localStorage.getItem('userData') != null){
   var userData = JSON.parse(localStorage.getItem('userData'));
@@ -92,63 +93,55 @@ export class Header extends Component {
         })
     }
 
- 
+    
+    getCartData = () => {
+      let cartData = JSON.parse(localStorage.getItem("cartData"));
+      if(cartData == null){
+        this.setState({cartCount: 0});
+      }
+
+      if(cartData != null) {
+        let cartCount = cartData.cartCount;
+        this.setState({cartCount : cartCount})
+      }
+    }
+
+    getCategoriesData = () => {
+      fetch("https://localhost:44333/api/products/getCategories")
+        .then(res => res.json())
+        .then(
+          (result) => {
+            this.setState({
+              categories : result
+            });
+          },
+          (error) => {
+            this.setState({
+              error
+            });
+          }
+        )
+    }
+
     componentDidMount(){
-        this.handleLoggedIn();
-        let cartId = localStorage.getItem("cartId");
-        if(cartId == null){
-            this.setState({cartCount: 0});
-        }
-                
-          var self = this;
-          axios.get("https://localhost:44333/api/cart/getCartCount?cartId=" + cartId)
-            .then(function(response){
-              self.setState({
-                cartCount: response.data
-              });
-            })
-            .catch(function(error){
-              self.setState({
-                error
-              });
-            })
-   
-        fetch("https://localhost:44333/api/products/getCategories")
-          .then(res => res.json())
-          .then(
-            (result) => {
-              this.setState({
-                categories : result
-              });
-            },
-            (error) => {
-              this.setState({
-                error
-              });
-            }
-          )    
+        this.handleLoggedIn();      
+        this.getCartData();
+        this.getCategoriesData();     
         }
 
-    /*componentDidUpdate(){
-        let cartId = localStorage.getItem("cartId");
-        if(cartId == null){
-            this.setState({cartCount: 0});
+    componentDidUpdate(prevState){
+      if(prevState.cartCount != JSON.parse(localStorage.getItem("cartData").cartCount))
+      console.log('updating')
+      if(JSON.parse(localStorage.getItem("cartData") != null)){
+        let cartData = JSON.parse(localStorage.getItem("cartData"));
+        let cartCount = cartData.cartCount
+        console.log(cartCount)
+        if(this.state.cartCount !=  cartCount){
+          console.log('updating')
+          this.getCartData();
         }
-        fetch("https://localhost:44333/api/cart/getCartCount?cartId=" + cartId)
-          .then(res => res.json())
-          .then(
-            (result) => {
-              this.setState({
-                cartCount: result
-              });
-            },
-            (error) => {
-              this.setState({
-                error
-              });
-            }
-          )
-    }*/
+      }
+    }
     
 
     render() {

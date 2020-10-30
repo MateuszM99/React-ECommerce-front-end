@@ -19,16 +19,30 @@ export class Product_View_Header extends Component {
         super(props);
         
         this.state = {
-            sortState : null,
-            orderState : null,
-            sizeState : null,
+            sortState : this.grabSortValue(),
+            orderState : this.grabQueryValue('orderType'),
+            sizeState : this.grabQueryValue('size'),
             colorState : null,
-            value : [0,999],
+            value : [this.grabQueryValue('priceFrom'),this.grabQueryValue('priceTo')],
             isPriceShown : false
         }
     }
 
     classes = this.props.classes;
+
+    grabSortValue = () => {
+        let value = new URLSearchParams(this.props.location.search).get('orderType');
+        let sortType = new URLSearchParams(this.props.location.search).get('sortType');
+        if(value != null){
+            sortType = sortType.concat('Desc');
+        }
+        return sortType;
+    }
+
+    grabQueryValue = (key) => {
+        let value = new URLSearchParams(this.props.location.search).get(key);
+        return value;
+    }
 
     addQuery = (key,value,searchParams) => {
         searchParams.set(key,value);
@@ -49,7 +63,7 @@ export class Product_View_Header extends Component {
             searchParams = this.removeQuery("sortType", searchParams);
         } else {
             this.setState({sortState : e.target.value});
-            searchParams = this.addQuery("sortType", e.target.value, searchParams);
+            searchParams = this.addQuery("sortType", e.target.value.replace("Desc",""), searchParams);         
         }
 
         if(/Desc$/.test(e.target.value)){
@@ -135,7 +149,7 @@ export class Product_View_Header extends Component {
                     </span>
                     <span>
                         <label>Size: </label>
-                        <select value={this.state.sizeState} onChange={this.handleSizeChange}>
+                        <select value={this.state.sizeState} selected={this.state.sizeState} onChange={this.handleSizeChange}>
                             <option value="">None</option>
                             <option value="XS">XS</option>
                             <option value="S">S</option>

@@ -8,8 +8,8 @@ function Category_tr(props) {
         <td>{props.name}</td>
         <td>
             <div className="cm__products__container__actions">
-                <Link className="cm__products__container__product__button">Edit</Link> 
-                <button className="cm__products__container__product__button">Delete</button>
+                <Link className="cm__products__container__product__button" to={`/manage/categories/editCategory/${props.id}`}>Edit</Link> 
+                <button className="cm__products__container__product__button" onClick={() => props.delete(props.id)}>Delete</button>
             </div>
         </td>
     </tr>

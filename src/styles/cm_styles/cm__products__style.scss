@@ -2,7 +2,7 @@
 .cm__products__container{
     display: flex;
     flex-direction: column;
-    width: 75%;
+    width: 81%;
     margin: 25px;
     margin-top: 75px;
 
@@ -19,7 +19,7 @@
           minmax(150px, 1.67fr)
           minmax(150px, 1fr)
           minmax(150px, 1.67fr)
-          minmax(150px, 3.33fr);
+          minmax(300px, 3.33fr);
       }
 
         thead {
@@ -132,7 +132,7 @@
     outline: none;
     border-style:none;
     height: 32px;
-    width: 120px;
+    width: 90px;
     background-color: rgb(60, 60, 65);
     color: white;
     margin-left: 5px;

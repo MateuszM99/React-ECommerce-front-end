@@ -9,8 +9,6 @@ export class Cart_View extends Component {
     constructor(props) {
         super(props);
 
-        this.getCartPrice = this.getCartPrice.bind(this);
-
         this.state = {
           error: null,
           cartProducts: [],
@@ -18,48 +16,33 @@ export class Cart_View extends Component {
         };
       }
 
-      getCartPrice = () => {
-        var totalCartPrice = 0;
-        this.state.cartProducts.forEach(cartProduct => {
-            totalCartPrice += cartProduct.product.price * cartProduct.quantity;
-        });
 
-        return totalCartPrice;
+      getCart = () => {
+        let cartData = JSON.parse(localStorage.getItem("cartData"));
+        if(cartData != null){
+          let cartId = cartData.cartId;
+          var self = this;
+          axios.get("https://localhost:44333/api/cart/getCart?cartId=" + cartId)
+            .then(function(response){
+              self.setState({
+                cartProducts: response.data
+              });
+            })
+            .catch(function(error){
+              self.setState({
+                error
+              });
+            })
+          }
       }
 
       componentDidMount() {
-        let cartId = localStorage.getItem("cartId");
-        var self = this;
-        axios.get("https://localhost:44333/api/cart/getCart?cartId=" + cartId)
-          .then(function(response){
-            self.setState({
-              cartProducts: response.data
-            });
-          })
-          .catch(function(error){
-            self.setState({
-              error
-            });
-          })
+        this.getCart();
       }
 
-     /* componentDidUpdate(){
-        let cartId = localStorage.getItem("cartId");
-        fetch("https://localhost:44333/api/cart/getCart?cartId=" + cartId)
-          .then(res => res.json())
-          .then(
-            (result) => {
-              this.setState({
-                cartProducts: result
-              });
-            },
-            (error) => {
-              this.setState({
-                error
-              });
-            }
-          )
-      }*/
+      componentDidUpdate(){
+        
+      }
 
     render() {
         const { error, isLoaded, cartProducts,isLoggedIn } = this.state;
@@ -79,7 +62,7 @@ export class Cart_View extends Component {
                     </ul>
                     <div className="cart__total">
                     <p>Total price :</p>
-                    <p>{this.getCartPrice()} PLN</p>
+                    <p>{JSON.parse(localStorage.getItem("cartData")).cartPrice} PLN</p>
                     </div>
                     <div className="cart__order">
                     <a onClick={this.props.onCartShow}>Continue</a>

@@ -2,13 +2,16 @@ import React,{ useEffect, useState } from 'react'
 import '../../styles/cm_styles/cm__options__style.scss'
 import Option_tr from './Option_tr'
 import axios from 'axios';
+import {Link} from 'react-router-dom'
+
 
 function Options_Management() {
 
     const [options,setOptions] = useState([]);
     const [error,setError] = useState(null);
+    const [searchString,setSearchString] = useState("");
 
-    useEffect(() => {
+    const getAllOptions = () => {
         axios.get("https://localhost:44333/api/products/getOptions")
         .then(function(response){
             console.log(response.data);
@@ -16,15 +19,28 @@ function Options_Management() {
         })
         .catch(function(error){
           setError(error)
-        })  
-    })
+        })
+    }
+
+    useEffect(() => {
+        getAllOptions();  
+    },[])
+
+    const deleteOption = (optionId) => {
+        axios.post("https://localhost:44333/api/products/")
+        .then(getAllOptions);
+    }
+
+    const handleSearchChange = (e) => {
+        setSearchString(e.target.value)
+    }
 
     return (
         <div className="cm__options__container">
             <div className="cm__options__container__filter">
-                <button>Add option</button>
+                <Link to="/manage/options/addOption">Add option</Link>
                 <label>Search : </label>
-                <input></input>
+                <input onChange={handleSearchChange}></input>
             </div>
             <table>
                 <thead>
@@ -35,8 +51,10 @@ function Options_Management() {
                     </tr>
                 </thead>
                 <tbody>
-                 {options.map(option => (
-                     <Option_tr key={option.id} id={option.id} name={option.name}/>
+                 {options
+                 .filter(option => option.name.toLowerCase().includes(searchString.toLowerCase()) || option.id.toString().includes(searchString))
+                 .map(option => (
+                     <Option_tr key={option.id} id={option.id} name={option.name} delete={deleteOption}/>
                  ))}
                 </tbody>
             </table>
