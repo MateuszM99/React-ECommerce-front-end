@@ -25,6 +25,7 @@ import Login from './components/authentication_components/Login';
 import SignUp from './components/authentication_components/SignUp';
 import Content_Management_Main from './components/content_management_components/CM_Main'
 import PrivateRoute from './PrivateRoute';
+import CartContextProvider from './contexts/CartContext';
 
 function App() {
 
@@ -45,18 +46,19 @@ function App() {
 
   return (
     <Router>
-    <div className="App">
-    <ToastContainer
-      position="top-right"
-      autoClose={2000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-    />
+      <CartContextProvider>
+      <div className="App">
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Switch>
         <Route path="/login">
           <Login_View/>
@@ -98,6 +100,7 @@ function App() {
         </Route>
       </Switch>
     </div>
+    </CartContextProvider>
     </Router>
   );
 }

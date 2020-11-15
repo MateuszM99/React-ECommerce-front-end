@@ -11,10 +11,17 @@ export class Delivery_Method extends Component {
         }
         return (
             <div className="order__form__delivery__inputs__input" style={isChecked ? {backgroundColor:"white",border:"solid 1px lightgray"} : {backgroundColor:"#f4f4f4",fontWeight:"400"}}>
-                <Field type="radio" name="delivery_method" value={this.props.value} checked={isChecked}  onChange={this.props.handleDeliveryChange}></Field>
+                <Field type="radio" name="delivery_method" 
+                value={this.props.value} 
+                checked={isChecked}  
+                onChange={e => {
+                    this.props.handleDeliveryChange(e);
+                    this.props.setFieldValue('delivery_method',e.target.value)
+                }}
+                />
                 <div>
-                <p>Kurier DHL</p>
-                <p>12.99$</p>
+                <p>{this.props.deliveryName}</p>
+                <p>{this.props.price} $</p>
                 </div>
             </div>
         )

@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import '../../styles/product_styles/product__details.scss'
 import {Link,withRouter} from  "react-router-dom"
 import PostData from '../../services/data_requests/PostData'
-import AddToCart from '../../services/cart_services/AddToCart'
+import { CartContext } from '../../contexts/CartContext'
 
 export class Product_View_Details extends Component {
+
+    static contextType = CartContext;
 
     constructor(props){
         super(props)
@@ -47,6 +49,7 @@ export class Product_View_Details extends Component {
     }
 
     render() {
+        const {addToCart} = this.context;
         if(!this.state.isLoaded) {
             return <div>Loading</div>
           }
@@ -84,7 +87,7 @@ export class Product_View_Details extends Component {
                             </select>
                         </span>
                         <input type="text" value={this.state.quantity} onChange={this.handleQuantityChange}></input>
-                        <button onClick={()=> AddToCart(this.state.product.id,this.state.quantity,this.state.size)}>Add to cart</button>
+                        <button onClick={()=> addToCart(this.state.product.id,this.state.quantity,this.state.size)}>Add to cart</button>
                     </div>
                     <div className="product__details__info__characteristics">
                         <p>Characteristics:</p>

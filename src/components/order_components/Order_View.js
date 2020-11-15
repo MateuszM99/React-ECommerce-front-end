@@ -110,10 +110,11 @@ export class Order_View extends Component {
     } 
 
     handlePaymentChange = (e) => {
+      console.log(e)
         this.setState({payment : e.target.value});
     } 
 
-    renderStepContent = (step,errors,touched) => {
+    renderStepContent = (step,errors,touched,setFieldValue) => {
         switch(step){
         case 0:
             return (
@@ -131,6 +132,7 @@ export class Order_View extends Component {
                 handleDeliveryChange={this.handleDeliveryChange} 
                 handlePaymentChange={this.handlePaymentChange} 
                 errors={errors} touched={touched}
+                setFieldValue = {setFieldValue}
                 />
             )
         case 3:
@@ -144,8 +146,24 @@ export class Order_View extends Component {
     submitForm = (values, actions) => {
         setTimeout(() => {      
             if(values != null){
-                let cartId = localStorage.getItem("cartId");
-                axios.post("https://localhost:44333/api/order/createOrder?cartId=" + cartId + "&deliveryId=" + values.delivery_method + "&paymentId=" + values.payment_method,values)
+                let cartId = JSON.parse(localStorage.getItem("cartData")).cartId;
+                axios.post("https://localhost:44333/api/order/createOrder",
+                          {
+                            clientEmail : values.email,
+                            clientName : values.name,
+                            clientSurname : values.lastName,
+                            clientPhone : values.phone,
+                            address : {
+                              street : values.street,
+                              houseNumber : values.houseNumber,
+                              postCode : values.postCode,
+                              city : values.city,
+                              country : values.country
+                            },                        
+                            deliveryMethodId : values.delivery_method,
+                            paymentMethodId : values.payment_method,
+                            cartId : cartId
+                          })
                     .then(function(response){                     
                         console.log(response.data);
                     })
@@ -212,10 +230,10 @@ export class Order_View extends Component {
                                 validationSchema={currentValidationSchema}                               
                                 onSubmit={this.handleSumbit}                    
                             >
-                       {({ errors, touched,isSubmitting}) => (
+                       {({ errors, touched,isSubmitting,setFieldValue}) => (
                            <Form>
                            <div className="form">
-                               {this.renderStepContent(activeStep,errors,touched)}
+                               {this.renderStepContent(activeStep,errors,touched,setFieldValue)}
                                <div className="form_buttons">
                                {activeStep !== 0 && (
                                     <button className="form__button__step" onClick={this.handleBack} type="button">Previous</button>

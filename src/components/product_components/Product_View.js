@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 import Product from '../product_components/Product'
 import '../../styles/product_styles/product__view__main.scss'
 import { withRouter } from "react-router-dom";
+import { CartContext } from '../../contexts/CartContext';
 
 export class Product_View extends Component {
     
+    static contextType = CartContext;
+
     constructor(props) {
         super(props);
 
@@ -48,13 +51,14 @@ export class Product_View extends Component {
 
     render() {
         const { error, isLoaded, products } = this.state;
+        const {addToCart} = this.context;
         return (
             <section id="products__list">
                 <div className="product__main">
                     <ul>
                     {products.map(product => (
                     <li key={product.id}>
-                    <Product id={product.id} title={product.name} price={product.price} image={product.imageUrl} category={product.categoryName} addToCart={this.addToCart}/>
+                    <Product id={product.id} title={product.name} price={product.price} image={product.imageUrl} category={product.categoryName} addToCart={addToCart}/>
                     </li>
                     ))}
                     </ul>

@@ -1,56 +1,21 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { CartContext } from '../../contexts/CartContext'
 
 export class Products_List extends Component {
+
+    static contextType = CartContext;
 
     constructor(props){
         super(props)
 
-        this.state = {
-            error: null,
-            cartProducts: [],
-            isLoaded : false
-        }
     }
-
-    getCartPrice = () => {
-        var totalCartPrice = 0;
-        this.state.cartProducts.forEach(cartProduct => {
-            totalCartPrice += cartProduct.product.price * cartProduct.quantity;
-        });
-
-        return totalCartPrice;
-      }
-
-    componentDidMount() {
-        let cartId = localStorage.getItem("cartId");
-        axios.get("https://localhost:44333/api/cart/getCart?cartId=" + cartId)
-          .then(
-            result => {
-              this.setState({
-                isLoaded: true,
-                cartProducts: result.data
-              })
-            })
-            .catch(error => {
-              this.setState({
-                isLoaded: true,
-                error
-              });
-            })       
-    }
-
 
     render() {
-        const { error, isLoaded, cartProducts } = this.state;
-        if(error){
+        const {cartProducts,cartPrice} = this.context;
+        if(cartProducts == null){
             return(
                 <div>Could not load content</div>
-            )
-        }
-        if(isLoaded == false){
-            return(
-                <div>Loading</div>
             )
         }
         return (
@@ -72,7 +37,7 @@ export class Products_List extends Component {
                     <div className="products__list__costs">
                         <span>
                             <p className="products__list__costs__label">Sum:</p>
-                    <p className="products__list__costs__price">{this.getCartPrice()} PLN</p>
+                    <p className="products__list__costs__price">{cartPrice} PLN</p>
                         </span>
                         <span>
                             <p className="products__list__costs__label">Delivery:</p>

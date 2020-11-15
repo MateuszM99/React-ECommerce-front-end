@@ -11,6 +11,7 @@ import { withStyles } from '@material-ui/core';
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import PaymentDeliveryForm from '../order_components/PaymentDeliveryForm';
+import { CartContext } from '../../contexts/CartContext';
 
 if(localStorage.getItem('userData') != null){
   var userData = JSON.parse(localStorage.getItem('userData'));
@@ -18,6 +19,8 @@ if(localStorage.getItem('userData') != null){
 
 
 export class Header extends Component {
+    
+    static contextType = CartContext;
 
     constructor(props) {
         super(props);
@@ -129,18 +132,8 @@ export class Header extends Component {
         this.getCategoriesData();     
         }
 
-    componentDidUpdate(prevState){
-      if(prevState.cartCount != JSON.parse(localStorage.getItem("cartData").cartCount))
-      console.log('updating')
-      if(JSON.parse(localStorage.getItem("cartData") != null)){
-        let cartData = JSON.parse(localStorage.getItem("cartData"));
-        let cartCount = cartData.cartCount
-        console.log(cartCount)
-        if(this.state.cartCount !=  cartCount){
-          console.log('updating')
-          this.getCartData();
-        }
-      }
+    componentDidUpdate(){
+      
     }
     
 
@@ -163,7 +156,7 @@ export class Header extends Component {
                   <a onClick={this.logout} style={{display : this.state.isLoggedIn ? 'block' : 'none'}}>Logout</a>   
                   <div className="cart__div">   
                   <IconButton aria-label="cart" onClick={this.handleCartShow}>
-                  <Badge badgeContent={this.state.cartCount} color="secondary"
+                  <Badge badgeContent={this.context.cartCount} color="secondary"
                     anchorOrigin={{
                       vertical: 'bottom',
                       horizontal: 'right',
