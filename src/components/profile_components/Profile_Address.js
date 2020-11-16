@@ -40,7 +40,7 @@ export class Profile_Address extends Component {
         return (
         <div className="profile__edit__main__container">
             <div className="profile__edit__container">
-                <h2>Profile Address</h2>
+                <h2>Edit Address</h2>
                 <Formik
                     initialValues = {{
                         postCode : '',
@@ -113,23 +113,23 @@ export class Profile_Address extends Component {
                 </Formik>               
             </div>
             <div className="profile__info__container">
-            <h2>Profile Info</h2>
+            <h2>Address Info</h2>
             <div>
                 <span>
                     <label className="profile__info__label">Post code</label>
-                    <p className="profile__info__text">{user.address.postCode}</p>
+                    <p className="profile__info__text">{user.address ? user.address.postCode : null}</p>
                 </span>
                 <span>
                     <label className="profile__info__label">Country</label>
-                    <p className="profile__info__text">{user.address.country ? user.address.country : null}</p>
+                    <p className="profile__info__text">{user.address ? user.address.country : null}</p>
                 </span>
             </div>
             <label className="profile__info__label">City</label>
-            <p className="profile__info__text2">{user.address.city ? user.address.city : null}</p>
+            <p className="profile__info__text2">{user.address ? user.address.city : null}</p>
             <label className="profile__info__label">Street</label>
-            <p className="profile__info__text2">{user.address.street ? user.address.street : null}</p>
+            <p className="profile__info__text2">{user.address ? user.address.street : null}</p>
             <label className="profile__info__label">House number</label>
-            <p className="profile__info__text0">{user.address.houseNumber ? user.address.houseNumber : null}</p>
+            <p className="profile__info__text0">{user.address ? user.address.houseNumber : null}</p>
         </div>
     </div>
         )

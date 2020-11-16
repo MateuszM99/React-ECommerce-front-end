@@ -18,9 +18,24 @@ export class Cart_View extends Component {
         };
       }
 
+    componentDidMount(){
+        if(localStorage.getItem('userData') != null){
+            this.setState({
+                isLoggedIn : true
+            })
+        }
+    }
+
     render() {
         const { error, isLoaded,isLoggedIn } = this.state;
         const {cartProducts,cartPrice,removeItemFromCart} = this.context;
+        if(cartProducts == null){
+            return (
+                <div>
+                    Loading
+                </div>
+            )
+        }
         return (
             <div className="popup" style={{display : this.props.isCartShown ? 'block' : 'none',opacity : this.props.isCartShown ? '1' : '0'}}>
                 <div className="cart__view">
@@ -37,13 +52,13 @@ export class Cart_View extends Component {
                     </ul>
                     <div className="cart__total">
                     <p>Total price :</p>
-                    <p>{cartPrice} PLN</p>
+                    <p>{cartPrice} $</p>
                     </div>
                     <div className="cart__order">
                     <a onClick={this.props.onCartShow}>Continue</a>
                     { isLoggedIn ? 
-                    <Link to="/order" className="order__button">Order</Link> :
-                    <Link to="/checkLogin" className="order__button">Order</Link>
+                    <Link to="/order" className="order__button" style={{display : this.context.cartCount != 0 ? 'flex' : 'none'}}>Order</Link> :
+                    <Link to="/checkLogin" className="order__button" style={{display : this.context.cartCount != 0 ? 'flex' : 'none'}}>Order</Link>
                     }
                     </div>
                 </div>

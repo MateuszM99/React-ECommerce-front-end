@@ -47,60 +47,60 @@ function App() {
   return (
     <Router>
       <CartContextProvider>
-      <div className="App">
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      <Switch>
-        <Route path="/login">
-          <Login_View/>
-        </Route>
-        <Route path="/signup">
-          <SignUp_View/>
-        </Route>
-        <Route path="/products" exact>
+        <div className="App">
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <Switch>
+          <Route path="/login">
+            <Login_View/>
+          </Route>
+          <Route path="/signup">
+            <SignUp_View/>
+          </Route>
+          <Route path="/products" exact>
+              <Header/>
+              <Product_View_Header/>
+              <Product_View/>
+          </Route>   
+          <Route path="/products/:id" exact>
+              <Header/>
+              <Product_View_Header/>
+              <Product_View/>        
+          </Route>
+          <Route path="/products/:categoryId/:productId" exact>
+              <Header/>
+              <Product_View_Details/>
+          </Route>
+          <Route path="/order" exact>
+            <Order_View/>
+          </Route>
+          <Route path="/order/confirm" exact>
+            <Order_View/>
+          </Route>
+          <Route path="/checkLogin">
+            <CheckLogin/>
+          </Route>
+          <PrivateRoute path="/profile" component={Profile_View}>
+          </PrivateRoute>
+          <Route path="/manage" component={Content_Management_Main}>
+          </Route>
+          <Route path="/">
             <Header/>
             <Product_View_Header/>
             <Product_View/>
-        </Route>   
-        <Route path="/products/:id" exact>
-            <Header/>
-            <Product_View_Header/>
-            <Product_View/>        
-        </Route>
-        <Route path="/products/:categoryId/:productId" exact>
-            <Header/>
-            <Product_View_Details/>
-        </Route>
-        <Route path="/order" exact>
-          <Order_View/>
-        </Route>
-        <Route path="/order/confirm" exact>
-          <Order_View/>
-        </Route>
-        <Route path="/checkLogin">
-          <CheckLogin/>
-        </Route>
-        <PrivateRoute path="/profile" component={Profile_View}>
-        </PrivateRoute>
-        <Route path="/manage" component={Content_Management_Main}>
-        </Route>
-        <Route path="/">
-          <Header/>
-          <Product_View_Header/>
-          <Product_View/>
-        </Route>
-      </Switch>
-    </div>
-    </CartContextProvider>
+          </Route>
+        </Switch>
+      </div>
+      </CartContextProvider>
     </Router>
   );
 }

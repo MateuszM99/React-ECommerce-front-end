@@ -3,28 +3,32 @@ import { Route, Redirect } from 'react-router-dom'
 import jwt_decode from "jwt-decode";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)  
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
   useEffect(() => {
-    let user = localStorage.getItem('userData');
-        if(user){
+    let user = JSON.parse(localStorage.getItem('userData'));
+        if(user != null){
             let token = user.token;
             let tokenExpiration = jwt_decode(token).exp;
             let dateNow = new Date();
 
             if(tokenExpiration < dateNow.getTime()/1000){
-                setIsAuthenticated(false)
-            }else{
-                setIsAuthenticated(true)
+              setIsAuthenticated(false)
+            } else {
+              setIsAuthenticated(true);
             }
         } else {
-           setIsAuthenticated(false)
+          setIsAuthenticated(false)
         }
-    // eslint-disable-next-line
-  })
+  },[isAuthenticated])
 
+  if(isAuthenticated == null){
+    return (
+      <div>Waiting</div>
+    )
+  }
   return (
     <Route {...rest} render={props =>
-      !isAuthenticated ? (
+      !isAuthenticated  ? (
         <Redirect to='/login'/>
       ) : (
         <Component {...props} />

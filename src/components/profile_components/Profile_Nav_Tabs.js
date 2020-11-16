@@ -8,6 +8,19 @@ import { Link } from 'react-router-dom';
 
 export class Profile_Nav_Tabs extends Component {
 
+    constructor(){
+        super()
+
+        this.state = {
+            currentTab : 0
+        }
+    }
+    
+    componentDidMount(){
+        this.onTabClick(this.state.currentTab);
+    }
+
+
     onTabClick = (id) => {
         let x;
         x = document.getElementsByClassName("profile__nav__tabs__tab");
@@ -16,6 +29,10 @@ export class Profile_Nav_Tabs extends Component {
         }
 
         x[id].className = "profile__nav__tabs__tab clicked"
+
+        this.setState({
+            currentTab : id
+        })
     } 
 
     render() {

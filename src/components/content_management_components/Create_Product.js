@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {Formik,Form,Field, yupToFormErrors} from 'formik'
 import * as Yup from 'yup'
 import '../../styles/cm_styles/cm__products__style.scss'
 import axios from 'axios'
+import { addProductRequest, getAvailableCategoriesRequest } from '../../services/api/ManagementRequests'
 
 
 function Create_Product() {
+    const [categoriesData,setCategoriesData] = useState([]);
+
+    const getCategories = async () => {
+        try{
+            let categories = await getAvailableCategoriesRequest()
+            setCategoriesData(categories.data);
+        } catch(error){
+
+        }
+    }
+
+    useEffect(() => {
+        getCategories();  
+    },[categoriesData])
 
     return (
         <div className="cm__products__create__container">
@@ -26,30 +41,30 @@ function Create_Product() {
                     sku : Yup.string()                          
                         .required('SKU is required'),
                     category : Yup.string()
-                        .required('Category is required'),    
+                        .required('Category is required'),  
+                    image : Yup.mixed()
+                        .required('Image is required')  
                 })}
 
                 onSubmit = {(values,{setSubmitting, setStatus,resetForm}) => {
-                    setTimeout(() => {
+                    setTimeout(async () => {
                         if(values != null){
                             console.log(values)
-                           axios.post(values)
-                            .then(response =>{
+                            try{
+                                let response = await addProductRequest(values);
                                 setSubmitting(false);
-                                resetForm();                                  
-                            })
-                            .catch(error => {
+                                resetForm();
+                            } catch(error) {
                                 setSubmitting(false);
                                 setStatus({
-                                    errorMessage : error.response.data.message
+                                    errorMessage : error.response.data
                                 });
-                                console.log(error.response);
-                            });  
+                            }  
                         }
                     },1000)
                 }}           
             >
-            {({ errors, touched,isSubmitting,status }) => (
+            {({ errors, touched,isSubmitting,status,setFieldValue }) => (
                 <Form>
                     <h2>Create Product</h2>
                     <span>
@@ -69,12 +84,19 @@ function Create_Product() {
                     {errors.sku && touched.sku ? <div className="cm__products__create__container__validation">{errors.sku}</div> : null}
                     <span>
                     <label className="cm__products__create__container__label">Category *</label>
-                    <Field className="cm__products__create__container__input" as="select" name="category"></Field>
+                    <Field className="cm__products__create__container__input" as="select" name="category">
+                        {categoriesData.map(category => (
+                            <option key={category.id} value={category.id}>{category.name}</option>
+                        ))}
+                    </Field>
                     </span>
                     {errors.category && touched.category ? <div className="cm__products__create__container__validation">{errors.category}</div> : null}
                     <span>
-                    <label className="cm__products__create__container__label">Image</label>            
-                    <Field className="cm__products__create__container__file" type="file" name="image"></Field>
+                    <label className="cm__products__create__container__label">Image</label>
+                    <input className="cm__products__create__container__file" id="image" name="image" type="file" 
+                        onChange={(event) => 
+                        {setFieldValue("image", event.currentTarget.files[0]);}}
+                    />                  
                     </span>
                     {errors.image && touched.image ? <div className="cm__products__create__container__validation">{errors.image}</div> : null}
                     <span>

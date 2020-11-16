@@ -3,11 +3,76 @@ import React, { Component } from 'react'
 import CountrySelectList from '../CountrySelectList'
 
 export class AddressForm extends Component {
+
+    constructor(props){
+        super(props);
+
+        this.state = {
+            isLoggedIn : false,
+            hasAddress : false,
+            isChecked : false,
+        }
+    }
+
+    componentDidMount(){
+        if(localStorage.getItem('userData') != null){
+            this.setState({
+                isLoggedIn : true
+            })
+
+            if(JSON.parse(localStorage.getItem('userData')).user.address != null){
+                this.setState({
+                    hasAddress : true,
+                    isChecked : false
+                })
+
+                const userAddressData = JSON.parse(localStorage.getItem('userData')).user.address;
+
+                this.props.setFieldValue('country',userAddressData.country);
+                this.props.setFieldValue('city',userAddressData.city);
+                this.props.setFieldValue('street',userAddressData.street);
+                this.props.setFieldValue('houseNumber',userAddressData.houseNumber);
+                this.props.setFieldValue('postCode',userAddressData.postCode);
+            }
+        }
+    }
+
+    onCheckboxChange = () => {
+
+        if(!this.state.isChecked){
+            this.props.setFieldValue('country','');
+                    this.props.setFieldValue('city','');
+                    this.props.setFieldValue('street','');
+                    this.props.setFieldValue('houseNumber','');
+                    this.props.setFieldValue('postCode','');
+        } else {
+            if(localStorage.getItem('userData') != null){
+                if(JSON.parse(localStorage.getItem('userData')).user.address != null){
+                    const userAddressData = JSON.parse(localStorage.getItem('userData')).user.address;
+
+                    this.props.setFieldValue('country',userAddressData.country);
+                    this.props.setFieldValue('city',userAddressData.city);
+                    this.props.setFieldValue('street',userAddressData.street);
+                    this.props.setFieldValue('houseNumber',userAddressData.houseNumber);
+                    this.props.setFieldValue('postCode',userAddressData.postCode);
+                }
+            }
+        }
+
+        this.setState({
+            isChecked : !this.state.isChecked
+        })
+    }
+
     render() {
         return (
             <div>    
                 <h3 className="order__form_header">Address details</h3>
-                <div className="order__form__inputs">
+                <div className="order_user_check" style={{display : (this.state.isLoggedIn && this.state.hasAddress) ? 'flex' : 'none'}}>
+                <p>Enter custom address details</p>
+                <input type="checkbox" onChange={this.onCheckboxChange}></input>
+                </div>
+                <div className="order__form__inputs" style={{display : (this.state.isChecked == this.state.isLoggedIn == this.state.hasAddress) ? 'block' : 'none'}}>
                     <div className="order__form__inputs__row">
                         <span>
                             <label>Country:</label>
@@ -48,15 +113,6 @@ export class AddressForm extends Component {
                                 {this.props.errors.houseNumber && this.props.touched.houseNumber ? <div className="validation">{this.props.errors.houseNumber}</div> : null}
                             </div>
                         </span>
-                    </div>
-                    <div className="order__form__inputs__row">
-                        <span>
-                            <label>Phone number:</label>
-                            <div>
-                                <Field type="text" name="phone" className="order__form__inputs__row_input_width2"></Field>
-                                {this.props.errors.phone && this.props.touched.phone ? <div className="validation">{this.props.errors.phone}</div> : null}
-                            </div>
-                        </span>  
                     </div>
                 </div>
             </div>    

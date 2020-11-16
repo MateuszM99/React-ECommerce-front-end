@@ -14,7 +14,7 @@ export class Cart_Product extends Component {
                     <p className="product__size">Size: {this.props.size}</p>
                     <div className="quantity__price">
                         <p className="product__quantity">{this.props.quantity}</p>
-                        <p className="product__price">{this.props.price * this.props.quantity} zł</p>
+                        <p className="product__price">{this.props.price * this.props.quantity} $</p>
                     </div>
                 </div>
             </div>

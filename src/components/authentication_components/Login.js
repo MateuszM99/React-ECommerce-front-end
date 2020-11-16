@@ -8,6 +8,7 @@ import '../../styles/login.scss'
 import {Link,withRouter} from "../../../node_modules/react-router-dom"
 
 export class Login extends Component {
+
     render() {
         return (
             <div className="login__container">

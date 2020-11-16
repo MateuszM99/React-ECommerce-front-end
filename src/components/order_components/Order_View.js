@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import '../../styles/order_styles/order__style.scss'
 import Products_List from './Products_List'
-import Order_Inputs from './Order_Inputs'
 import {Formik,Form, yupToFormErrors,Field} from 'formik'
 import * as Yup from 'yup'
 import { withRouter,Link,useHistory,Redirect } from "react-router-dom";
@@ -21,6 +20,7 @@ import StepConnector from '@material-ui/core/StepConnector';
 import { StepIcon } from '@material-ui/core'
 import Check from '@material-ui/icons/Check';
 import clsx from 'clsx';
+import { CartContext } from '../../contexts/CartContext'
 
 const QontoConnector = withStyles({
     alternativeLabel: {
@@ -92,21 +92,23 @@ const styles = {
 
 export class Order_View extends Component {
 
+    static contextType = CartContext;
+
     constructor(props) {
         super(props)
 
         this.state = {
             activeStep : 0,
             steps : ['User Details', 'Address Details', 'Select payment and delivery','Review Order'],
-            delivery : null,
+            delivery : 0,
             payment : null
         }
     }
 
     classes = this.props.classes;
 
-    handleDeliveryChange = (e) => {
-        this.setState({delivery : e.target.value});
+    handleDeliveryChange = (price) => {
+        this.setState({delivery : price});
     } 
 
     handlePaymentChange = (e) => {
@@ -118,11 +120,11 @@ export class Order_View extends Component {
         switch(step){
         case 0:
             return (
-                <UserInfoForm errors={errors} touched={touched}/>
+                <UserInfoForm errors={errors} touched={touched} setFieldValue = {setFieldValue}/>
             )
         case 1: 
             return (
-                <AddressForm errors={errors} touched={touched}/>
+                <AddressForm errors={errors} touched={touched} setFieldValue = {setFieldValue}/>
             )  
         case 2:
             return(
@@ -197,58 +199,66 @@ export class Order_View extends Component {
         const {steps} = this.state;
         const isLastStep = activeStep === steps.length - 1;
         const currentValidationSchema = validationSchema[activeStep];
-        return (
-                <div className="order__container">
-                    <div className="order__header__container">
-                        <Link to="/"><button className="back__button">Back to shop</button></Link>
-                    </div>
-                    <div className="order__main__container">
-                        <div className="order__main__container__forms">
-                            <div className={this.classes.root}>
-                            <Stepper activeStep={activeStep} alternativeLabel connector={<QontoConnector/>}>
-                                {steps.map((label) => (
-                                <Step key={label}>
-                                    <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
-                                </Step>
-                                ))}
-                            </Stepper>
-                         </div>
-                            <Formik         
-                                initialValues={{
-                                    email : '',
-                                    name : '',
-                                    lastName :'',
-                                    street : '',
-                                    houseNumber : '',
-                                    postCode : '',
-                                    city : '',
-                                    country : '',
-                                    phone : '',
-                                    delivery_method : '',
-                                    payment_method : '',
-                                }}
-                                validationSchema={currentValidationSchema}                               
-                                onSubmit={this.handleSumbit}                    
-                            >
-                       {({ errors, touched,isSubmitting,setFieldValue}) => (
-                           <Form>
-                           <div className="form">
-                               {this.renderStepContent(activeStep,errors,touched,setFieldValue)}
-                               <div className="form_buttons">
-                               {activeStep !== 0 && (
-                                    <button className="form__button__step" onClick={this.handleBack} type="button">Previous</button>
-                                )}  
-                                <button className="form__button__step" type="submit">{isLastStep ? 'Place order' : 'Next'}</button>
-                               </div>
-                           </div>
-                           </Form>
-                       )}
-                       </Formik>
-                    </div>   
-                    <Products_List delivery={this.state.delivery}/>
-                </div>
+        if(this.context.cartCount == 0){
+          return (
+            <div style={{display : 'flex', width : '100%', height : '100vh', justifyContent : 'center', alignItems : 'center'}}>
+              Your cart is empty
             </div>
-        )
+          )
+        } else {
+          return (
+                  <div className="order__container">
+                      <div className="order__header__container">
+                          <Link to="/"><button className="back__button">Back to shop</button></Link>
+                      </div>
+                      <div className="order__main__container">
+                          <div className="order__main__container__forms">
+                              <div className={this.classes.root}>
+                              <Stepper activeStep={activeStep} alternativeLabel connector={<QontoConnector/>}>
+                                  {steps.map((label) => (
+                                  <Step key={label}>
+                                      <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
+                                  </Step>
+                                  ))}
+                              </Stepper>
+                          </div>
+                              <Formik         
+                                  initialValues={{
+                                      email : '',
+                                      name : '',
+                                      lastName :'',
+                                      street : '',
+                                      houseNumber : '',
+                                      postCode : '',
+                                      city : '',
+                                      country : '',
+                                      phone : '',
+                                      delivery_method : '',
+                                      payment_method : '',
+                                  }}
+                                  validationSchema={currentValidationSchema}                               
+                                  onSubmit={this.handleSumbit}                    
+                              >
+                        {({ errors, touched,isSubmitting,setFieldValue}) => (
+                            <Form>
+                            <div className="form">
+                                {this.renderStepContent(activeStep,errors,touched,setFieldValue)}
+                                <div className="form_buttons">
+                                {activeStep !== 0 && (
+                                      <button className="form__button__step" onClick={this.handleBack} type="button">Previous</button>
+                                  )}  
+                                  <button className="form__button__step" type="submit">{isLastStep ? 'Place order' : 'Next'}</button>
+                                </div>
+                            </div>
+                            </Form>
+                        )}
+                        </Formik>
+                      </div>   
+                      <Products_List delivery={this.state.delivery}/>
+                  </div>
+              </div>
+          )
+        }
     }
 }
 

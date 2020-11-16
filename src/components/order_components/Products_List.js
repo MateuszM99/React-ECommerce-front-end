@@ -37,16 +37,16 @@ export class Products_List extends Component {
                     <div className="products__list__costs">
                         <span>
                             <p className="products__list__costs__label">Sum:</p>
-                    <p className="products__list__costs__price">{cartPrice} PLN</p>
+                    <p className="products__list__costs__price">{cartPrice} $</p>
                         </span>
                         <span>
                             <p className="products__list__costs__label">Delivery:</p>
-                            <p className="products__list__costs__price">{this.props.delivery}</p>
+                            <p className="products__list__costs__price">{this.props.delivery} $</p>
                         </span>
                     </div>
                     <div className="products__list__total">
                         <p>Total:</p>
-                        <p>74.99$</p>
+                        <p>{cartPrice + this.props.delivery} $</p>
                     </div>
                     <div className="order__comment">
                         <p>Add comment to the order:</p>

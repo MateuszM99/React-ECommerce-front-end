@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 export class Delivery_Method extends Component {
     render() {
         let isChecked;
-        if(this.props.delivery == this.props.value){
+        if(this.props.delivery == this.props.price){
         isChecked = true;
         } else {
         isChecked = false;    
@@ -15,7 +15,7 @@ export class Delivery_Method extends Component {
                 value={this.props.value} 
                 checked={isChecked}  
                 onChange={e => {
-                    this.props.handleDeliveryChange(e);
+                    this.props.handleDeliveryChange(this.props.price);
                     this.props.setFieldValue('delivery_method',e.target.value)
                 }}
                 />

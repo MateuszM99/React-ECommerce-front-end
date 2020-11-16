@@ -12,6 +12,9 @@ const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2
             .required('Email is required'),
         lastName : Yup.string()
                 .required('Last name is required'),
+        phone : Yup.string()
+                .matches(phoneRegExp, 'Phone number is not valid')
+                .required('Phone number is required'),
     }),
     Yup.object().shape({
         street : Yup.string()
@@ -24,9 +27,6 @@ const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2
             .required('City is required'),
         country : Yup.string()
             .required('You must choose country'),
-        phone : Yup.string()
-            .matches(phoneRegExp, 'Phone number is not valid')
-            .required('Phone number is required'),
     }),
     Yup.object().shape({
         delivery_method : Yup.string()

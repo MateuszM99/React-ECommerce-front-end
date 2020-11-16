@@ -5,13 +5,31 @@ import axios from 'axios';
 import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import '../../styles/signup.scss'
-import {Link} from "../../../node_modules/react-router-dom"
+import {Link,withRouter} from "../../../node_modules/react-router-dom"
 
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 const passwordRegExp = /^(.{0,7}|[^0-9]*|[^A-Z]*|[a-zA-Z0-9]*)$/
 
 export class SignUp extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+          error: null,
+          isLoggedIn : false
+        };
+      }
+
+    componentDidMount(){
+        if(localStorage.getItem('userData') != null){
+            this.setState({
+                isLoggedIn : true
+            })
+        }
+    }
+
     render() {
         return (
             <div className="signup__container">   
@@ -61,9 +79,12 @@ export class SignUp extends Component {
                                                 });
                                             setSubmitting(false);
                                             resetForm();    
-                                            this.props.onXClick();
+                                            this.props.history.push({
+                                                pathname : this.props.redirectPath
+                                            })
                                         })
                                         .catch(error => {
+                                            console.log(error);
                                             setSubmitting(false);
                                             setStatus({
                                                 errorMessage : error.response.data.message
@@ -120,4 +141,4 @@ export class SignUp extends Component {
     }
 }
 
-export default SignUp
+export default (withRouter(SignUp))

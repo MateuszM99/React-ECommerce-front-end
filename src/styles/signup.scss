@@ -1,7 +1,7 @@
 .signup__view__background{
     display: flex;
     background-color: #f2f2f2;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 
@@ -10,10 +10,12 @@
     align-self: center;
     justify-self: center;
     margin: auto;
+    margin-bottom: 50px;
+    margin-top: 50px;
     background-color: white;
     border: solid 1px lightgray;
-    height: 90vh;
-    width: 40%;
+    min-height: 90vh;
+    min-width: 80vh;
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -25,8 +27,7 @@
 }
 
 .signup__container__button__back{
-    position: absolute;
-    top: 5vh;
+    position: relative;
     margin-top: 10px;
     margin-left: 10px;
     height: 32px;
@@ -50,6 +51,7 @@
 
 .signup__container__box {
     margin-top: 30px;
+    margin-bottom: 30px;
     display: flex;
     flex-direction: column;
     height: 100%;
