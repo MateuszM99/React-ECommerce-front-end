@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom'
 import '../../styles/cm_styles/cm__products__style.scss'
 import Product_tr from './Product_tr'
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import { deleteProductRequest } from '../../services/api/ManagementRequests';
 
 function Products_Management() {
 
@@ -25,9 +27,14 @@ function Products_Management() {
         getProductsData(); 
     },[])
 
-    const deleteProduct = (productId) => {
-        axios.post("https://localhost:44333/api/products/deleteProduct?productId=" + productId)
-        .then(getProductsData);
+    const deleteProduct = async (productId,variationId) => {
+        try{
+            let response = await deleteProductRequest(productId,variationId);
+            toast.success(response.data.message)
+            getProductsData();
+        } catch (err) {
+            toast.error(error.response.data.message)
+        }
     }
 
     const handleSearchChange = (e) => {
@@ -59,7 +66,7 @@ function Products_Management() {
                 {products
                 .filter(product => product.name.toLowerCase().includes(searchString.toLowerCase()) || product.id.toString().includes(searchString) || product.sku.toLowerCase().includes(searchString.toLowerCase()) || product.categoryName.toLowerCase().includes(searchString.toLowerCase()))
                 .map(product => (
-                <Product_tr key={product.id} id={product.id} image={product.imageUrl} name={product.name} category={product.categoryName} sku={product.sku} price={product.price} delete={deleteProduct}/>
+                <Product_tr key={product.id} id={product.id} variationId={product.variationId} image={product.imageUrl} name={product.name} category={product.categoryName} sku={product.sku} price={product.price} delete={deleteProduct}/>
                 ))}
                 </tbody>
             </table>

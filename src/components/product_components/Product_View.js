@@ -57,8 +57,8 @@ export class Product_View extends Component {
                 <div className="product__main">
                     <ul>
                     {products.map(product => (
-                    <li key={product.id}>
-                    <Product id={product.id} title={product.name} price={product.price} image={product.imageUrl} category={product.categoryName} addToCart={addToCart}/>
+                    <li key={product.name}>
+                    <Product id={product.id} variationId={product.variationId} title={product.name} price={product.price} image={product.imageUrl} category={product.categoryName} addToCart={addToCart}/>
                     </li>
                     ))}
                     </ul>

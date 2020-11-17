@@ -21,6 +21,7 @@ import { StepIcon } from '@material-ui/core'
 import Check from '@material-ui/icons/Check';
 import clsx from 'clsx';
 import { CartContext } from '../../contexts/CartContext'
+import { toast } from 'react-toastify';
 
 const QontoConnector = withStyles({
     alternativeLabel: {
@@ -95,7 +96,7 @@ export class Order_View extends Component {
     static contextType = CartContext;
 
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             activeStep : 0,
@@ -147,7 +148,7 @@ export class Order_View extends Component {
 
     submitForm = (values, actions) => {
         setTimeout(() => {      
-            if(values != null){
+            if(values != null){               
                 let cartId = JSON.parse(localStorage.getItem("cartData")).cartId;
                 axios.post("https://localhost:44333/api/order/createOrder",
                           {
@@ -166,17 +167,19 @@ export class Order_View extends Component {
                             paymentMethodId : values.payment_method,
                             cartId : cartId
                           })
-                    .then(function(response){                     
-                        console.log(response.data);
+                    .then(response => {                     
+                        toast.success('Order placed succesfully, go to your email and confirm it')   
+                        this.props.history.push({
+                          pathname : "/"
+                        })                      
                     })
-                    .then(function(error){
-                        console.log(error);
+                    .catch(error => {                     
+                      toast.error('Something went wrong')
+                      this.setState({activeStep : 0})
                 });  
             }                             
-            alert(JSON.stringify(values,null,2));
-        },3000)
+        },1000)
         actions.setSubmitting(false);
-        this.setState({activeStep : this.state.activeStep + 1})
       }
 
     handleSumbit = (values,actions) => {

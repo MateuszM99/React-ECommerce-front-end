@@ -1,6 +1,8 @@
 import React,{ useEffect, useState } from 'react'
 import {useParams,Link} from 'react-router-dom'
 import axios from 'axios';
+import { addStockToProductOptionRequest } from '../../services/api/ManagementRequests';
+import { toast } from 'react-toastify';
 
 
 
@@ -48,8 +50,14 @@ function Product_Options_Stock(props) {
         .then(getProductData);
     }
 
-    const addToStock = () => {
-        console.log(num);
+    const addToStock = async (productId,optionId) => {
+        try{
+            let response = await addStockToProductOptionRequest(productId,optionId,num);
+            toast.success(response.data.message);
+        } catch (error){
+            toast.error(error.response.data.message);
+        }
+        getProductData();
     }
 
     const handleNumChange = (e) => {
@@ -84,7 +92,7 @@ function Product_Options_Stock(props) {
                             <p>{option.name}</p>
                             <div>
                                 <input type="text" onChange={handleNumChange}></input>
-                                <button onClick={addToStock}>Add to stock</button>
+                                <button onClick={() => addToStock(id,option.id)}>Add to stock</button>
                                 <p>Current stock</p>
                                 <p className="cm__products__option__stock__container__options__boxtext">{option.stock}</p>
                             </div>

@@ -7,7 +7,7 @@ function Product_tr(props) {
     return (
         <tr>
             <td>{props.id}</td>
-            <td>{props.image}</td>
+            <td><img src={props.image} className="cm__products__container__image"></img></td>
             <td>{props.name}</td>
             <td>{props.category}</td>
             <td>{props.sku}</td>
@@ -18,7 +18,7 @@ function Product_tr(props) {
                 <div className="cm__products__container__actions">
                     <Link className="cm__products__container__product__button" style={{width: "150px"}} to={`/manage/products/setOptionsStock/${props.id}`}>Set options/stock</Link>
                     <Link className="cm__products__container__product__button" to={`/manage/products/editProduct/${props.id}`}>Edit</Link> 
-                    <button className="cm__products__container__product__button" onClick={() => props.delete(props.id)}>Delete</button>
+                    <button className="cm__products__container__product__button" onClick={() => props.delete(props.id,props.variationId)}>Delete</button>
                 </div>
             </td>
         </tr>

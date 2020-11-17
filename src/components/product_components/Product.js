@@ -12,7 +12,7 @@ export class Product extends Component{
                 <div className="product__details">
                 <Link to={`/products/${this.props.category}/${this.props.id}`}>{this.props.title}</Link>
                 <p>{this.props.price} $</p>
-                <button className="add__toCart" onClick={() => this.props.addToCart(this.props.id)}>Add to cart</button>
+                <button className="add__toCart" onClick={() => this.props.addToCart(this.props.id,this.props.variationId)}>Add to cart</button>
                 </div>
             </div>
         )

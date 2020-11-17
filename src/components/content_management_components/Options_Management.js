@@ -3,6 +3,8 @@ import '../../styles/cm_styles/cm__options__style.scss'
 import Option_tr from './Option_tr'
 import axios from 'axios';
 import {Link} from 'react-router-dom'
+import { deleteOptionRequest } from '../../services/api/ManagementRequests';
+import { toast } from 'react-toastify'
 
 
 function Options_Management() {
@@ -26,9 +28,14 @@ function Options_Management() {
         getAllOptions();  
     },[])
 
-    const deleteOption = (optionId) => {
-        axios.post("https://localhost:44333/api/products/")
-        .then(getAllOptions);
+    const deleteOption = async (optionId) => {
+        try{
+            let response = await deleteOptionRequest(optionId);
+            toast.success(response.data.message)
+            getAllOptions();
+        } catch (err) {
+            toast.error('Error')
+        }
     }
 
     const handleSearchChange = (e) => {

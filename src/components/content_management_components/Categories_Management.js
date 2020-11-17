@@ -3,6 +3,8 @@ import '../../styles/cm_styles/cm__categories__style.scss'
 import Category_tr from './Category_tr'
 import axios from 'axios';
 import {Link} from 'react-router-dom'
+import { deleteCategoryRequest } from '../../services/api/ManagementRequests';
+import { toast } from 'react-toastify';
 
 function Categories_Management() {
 
@@ -25,9 +27,14 @@ function Categories_Management() {
         getCategoriesData(); 
     },[])
 
-    const deleteCategory = (categoryId) => {
-        axios.post("https://localhost:44333/api/products/")
-        .then(getCategoriesData);
+    const deleteCategory = async (categoryId) => {
+        try{
+            let response = await deleteCategoryRequest(categoryId);
+            toast.success(response.data.message);
+        } catch(error) {
+            toast.error('Error');
+        }   
+        getCategoriesData();
     }
 
     const handleSearchChange = (e) => {

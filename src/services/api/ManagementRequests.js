@@ -18,5 +18,32 @@ export function addProductRequest(values){
     formData.append('sku',values.sku);
     formData.append('price',values.price);
     formData.append('categoryId',values.category);
+    if(values.productId != "New product"){
+        formData.append('productId',values.productId);
+    }
     return axios.post(`${baseUrl}/products/addProduct`,formData,config);
+}
+
+export function deleteProductRequest(id,variationId){
+    return axios.post(`${baseUrl}/products/deleteProduct`,{productId : id,productVariationId : variationId});
+}
+
+export function addStockToProductOptionRequest(productId,optionId,stock){
+    return axios.post(`${baseUrl}/products/addStockToProductOption`,{productId : productId,optionId : optionId,stock:stock});
+}
+
+export function addCategoryRequest(values){
+    return axios.post(`${baseUrl}/products/addCategory`,{name : values.name});
+}
+
+export function deleteCategoryRequest(id){
+    return axios.post(`${baseUrl}/products/deleteCategory`,{id: id});
+}
+
+export function addOptionRequest(values){
+    return axios.post(`${baseUrl}/products/addOption`,{name : values.name});
+}
+
+export function deleteOptionRequest(id){
+    return axios.post(`${baseUrl}/products/deleteOption`,{id: id});
 }

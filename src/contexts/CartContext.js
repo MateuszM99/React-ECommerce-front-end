@@ -15,11 +15,11 @@ class CartContextProvider extends Component {
         error : null
     }
 
-    addToCart = async (productId,quantity=1,sizeOption="S") => {    
+    addToCart = async (productId,variationId,quantity=1,sizeOption="S") => {    
         if(localStorage.getItem("cartData") == null){
             let data = null;
             try {
-                let response = await addToNullCartRequest(productId,quantity,sizeOption);
+                let response = await addToNullCartRequest(productId,variationId,quantity,sizeOption);
                 data = response.data;
                 toast.success(response.data.message);
             } catch(err) {
@@ -39,7 +39,7 @@ class CartContextProvider extends Component {
             let cartId = cartData.cartId
             let data = null;
             try {
-                let response = await addToCartRequest(cartId,productId,quantity,sizeOption);
+                let response = await addToCartRequest(cartId,productId,variationId,quantity,sizeOption);
                 data = response.data;
                 toast.success(response.data.message);
             } catch(err) {
@@ -57,7 +57,7 @@ class CartContextProvider extends Component {
         }
     }
 
-    removeItemFromCart = async (productId) => {
+    removeItemFromCart = async (productId,variationId) => {
         if(localStorage.getItem("cartData") == null){
             toast.dark('Your cart is empty')    
             } else {
@@ -65,7 +65,7 @@ class CartContextProvider extends Component {
             let cartId = cartData.cartId;
             let data = null;
             try {
-                let response = await removeItemFromCartRequest(cartId,productId);
+                let response = await removeItemFromCartRequest(cartId,productId,variationId);
                 data = response.data;
                 toast.success(response.data.message);
             } catch(err) {

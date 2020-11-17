@@ -45,8 +45,8 @@ export class Cart_View extends Component {
                     </div>
                     <ul className="cart__products">
                     {cartProducts.map(cartProduct => (
-                    <li key={cartProduct.product.id}>
-                    <Cart_Product id={cartProduct.product.id} name={cartProduct.product.name} price={cartProduct.product.price} quantity={cartProduct.quantity} image={cartProduct.product.imageUrl} size={cartProduct.option.name} removeItemFromCart={removeItemFromCart}/>
+                    <li key={cartProduct.product.id,cartProduct.product.variationId}>
+                    <Cart_Product id={cartProduct.product.id} variationId={cartProduct.product.variationId} name={cartProduct.product.name} price={cartProduct.product.price} quantity={cartProduct.quantity} image={cartProduct.product.imageUrl} size={cartProduct.option.name} removeItemFromCart={removeItemFromCart}/>
                     </li>
                     ))}
                     </ul>

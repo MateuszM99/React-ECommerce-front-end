@@ -4,10 +4,13 @@ import * as Yup from 'yup'
 import '../../styles/cm_styles/cm__products__style.scss'
 import axios from 'axios'
 import { addProductRequest, getAvailableCategoriesRequest } from '../../services/api/ManagementRequests'
+import { toast } from 'react-toastify'
 
 
 function Create_Product() {
     const [categoriesData,setCategoriesData] = useState([]);
+    const [products,setProducts] = useState([]);
+    const [error,setError] = useState(null);
 
     const getCategories = async () => {
         try{
@@ -18,14 +21,26 @@ function Create_Product() {
         }
     }
 
+    const getProductsData = () => {
+        axios.get("https://localhost:44333/api/products/getProducts")
+        .then(function(response){            
+            setProducts(response.data)
+        })
+        .catch(function(error){
+          setError(error)
+        })
+    }
+
     useEffect(() => {
         getCategories();  
-    },[categoriesData])
+        getProductsData();
+    },[])
 
     return (
         <div className="cm__products__create__container">
             <Formik
                 initialValues = {{
+                    productId : null,
                     name : '',
                     price : '',
                     sku : '',
@@ -52,6 +67,7 @@ function Create_Product() {
                             console.log(values)
                             try{
                                 let response = await addProductRequest(values);
+                                toast.success(response.data.message)
                                 setSubmitting(false);
                                 resetForm();
                             } catch(error) {
@@ -59,6 +75,7 @@ function Create_Product() {
                                 setStatus({
                                     errorMessage : error.response.data
                                 });
+                                toast.error(error.response.data.message);
                             }  
                         }
                     },1000)
@@ -68,6 +85,16 @@ function Create_Product() {
                 <Form>
                     <h2>Create Product</h2>
                     <span>
+                    <label className="cm__products__create__container__label">Choose variation</label>
+                    <Field className="cm__products__create__container__input" as="select" name="productId">
+                        <option>New product</option>
+                        {products.map(product => (
+                            <option key={product.addedAt} value={product.id}>Product id : {product.id}</option>
+                        ))}
+                    </Field>
+                    </span>
+                    {errors.productId && touched.productId ? <div className="cm__products__create__container__validation">{errors.productId}</div> : null}
+                    <span>                       
                     <label className="cm__products__create__container__label">Name *</label>
                     <Field className="cm__products__create__container__input" name="name"></Field>
                     </span>

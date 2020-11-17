@@ -37,6 +37,14 @@ export class AddressForm extends Component {
         }
     }
 
+    checkBooleanValues = (value1,value2,value3) => {
+        if((value1 === value2) && (value2 === value3)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     onCheckboxChange = () => {
 
         if(!this.state.isChecked){
@@ -68,11 +76,11 @@ export class AddressForm extends Component {
         return (
             <div>    
                 <h3 className="order__form_header">Address details</h3>
-                <div className="order_user_check" style={{display : (this.state.isLoggedIn && this.state.hasAddress) ? 'flex' : 'none'}}>
+                <div className="order_user_check" style={{display : this.state.isLoggedIn && this.state.hasAddress ? 'flex' : 'none'}}>
                 <p>Enter custom address details</p>
                 <input type="checkbox" onChange={this.onCheckboxChange}></input>
                 </div>
-                <div className="order__form__inputs" style={{display : (this.state.isChecked == this.state.isLoggedIn == this.state.hasAddress) ? 'block' : 'none'}}>
+                <div className="order__form__inputs" style={{display : (() => this.checkBooleanValues(this.state.isChecked,this.state.isLoggedIn,this.state.hasAddress)) ? 'block' : 'none'}}>
                     <div className="order__form__inputs__row">
                         <span>
                             <label>Country:</label>
