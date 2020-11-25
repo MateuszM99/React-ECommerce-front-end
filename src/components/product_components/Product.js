@@ -10,7 +10,7 @@ export class Product extends Component{
             <div className="product__card">
                 <img src={this.props.image} alt=""></img>
                 <div className="product__details">
-                <Link to={`/products/${this.props.category}/${this.props.id}`}>{this.props.title}</Link>
+                <Link to={`/category/${this.props.category}/${this.props.id}`}>{this.props.title}</Link>
                 <p>{this.props.price} $</p>
                 <button className="add__toCart" onClick={() => this.props.addToCart(this.props.id,this.props.variationId)}>Add to cart</button>
                 </div>

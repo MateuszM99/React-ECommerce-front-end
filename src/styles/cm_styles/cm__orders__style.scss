@@ -10,13 +10,13 @@
         border-collapse: collapse;
         min-width: 100%;
         grid-template-columns: 
-          minmax(150px, 1.67fr)
           minmax(100px, 1fr)
+          minmax(250px, 2fr)
           minmax(150px, 1.67fr)
           minmax(150px, 1.67fr)
-          minmax(150px, 1.67fr)
-          minmax(150px, 1.67fr)
-          minmax(150px, 3fr);
+          minmax(150px, 2.33fr)
+          minmax(150px, 2.33fr)
+          minmax(200px, 3fr);
       }
 
         thead {
@@ -112,4 +112,22 @@
             border: 2px solid lightgrey;
         }
     }
+}
+
+.edit__order__container{
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    margin-left: 100px;
+}
+
+.cm__orders__container__button {
+    outline: none;
+    border-style:none;
+    height: 40px;
+    width: 150px;
+    background-color: rgb(60, 60, 65);
+    color: white;
+    cursor: pointer;
+    margin-bottom: 30px;
 }

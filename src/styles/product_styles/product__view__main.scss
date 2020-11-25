@@ -4,7 +4,6 @@
 }
 
 .product__main {
-    margin-top: 25px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -14,9 +13,9 @@
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
     grid-column-gap: 30px;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    width: 65%;
+    width: 75%;
 }
 
 #products__list li{

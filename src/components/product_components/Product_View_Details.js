@@ -88,24 +88,10 @@ export class Product_View_Details extends Component {
                         </span>
                         <input type="text" value={this.state.quantity} onChange={this.handleQuantityChange}></input>
                         <button onClick={()=> addToCart(this.state.product.id,this.state.quantity,this.state.size)}>Add to cart</button>
-                    </div>
-                    <div className="product__details__info__characteristics">
-                        <p>Characteristics:</p>
-                        <ul>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                        </ul>
-                    </div>
-                    <div className="product__details__info__composition">
-                        <p>Material composition:</p>
-                        <ul>
-                            <li></li>
-                        </ul>
-                    </div>
+                    </div>           
                     <div className="product__details__info__about">
-                        <p>About me:</p>
-                        <p style={{fontSize: '13px'}}>Lorem ipsum some dummy text</p>
+                        <p>Description :</p>
+                        <p style={{fontSize: '13px'}}>{this.state.product.description}</p>
                     </div>
                 </div>
             </div>

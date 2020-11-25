@@ -135,7 +135,7 @@ export class Product_View_Header extends Component {
     render() {
         return (
             <div className="product__view__header">
-                <p>{this.props.match.params.id}</p>
+                <p>{this.props.match.params.category}</p>
                 <div className="sorting__filters">
                     <span>
                         <label>Sort: </label>
@@ -168,12 +168,12 @@ export class Product_View_Header extends Component {
                             onChange={this.handlePriceChange}
                             valueLabelDisplay="auto"
                             aria-labelledby="range-slider"
-                            max="999"
+                            max={999}
                             />
                             <div className="box__value">
-                                <span>{this.state.value[0]}zł</span>
+                                <span>{this.state.value[0]} $</span>
                                 <span>-</span>
-                                <span>{this.state.value[1]}zł</span>
+                                <span>{this.state.value[1]} $</span>
                             </div>
                             <div className="set__price__filter_container">
                             <button className="set__price__filter__button" onClick={this.handlePriceRangeSet}>Set</button>

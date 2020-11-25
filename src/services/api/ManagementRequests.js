@@ -47,3 +47,15 @@ export function addOptionRequest(values){
 export function deleteOptionRequest(id){
     return axios.post(`${baseUrl}/products/deleteOption`,{id: id});
 }
+
+export function getCurrentOrdersRequest(){
+    return axios.post(`${baseUrl}/order/getOrders`);
+}
+
+export function cancelOrderRequest(id){
+    return axios.post(`${baseUrl}/order/cancelOrder?orderId=${id}`);
+}
+
+export function editOrderRequest(values){
+    return axios.post(`${baseUrl}/order/editOrder`,values);
+}

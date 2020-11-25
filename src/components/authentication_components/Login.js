@@ -54,7 +54,7 @@ export class Login extends Component {
                                             setSubmitting(false);
                                             resetForm();
                                             setStatus({
-                                                errorMessage : "Looks like either your username or password were incorrect. Wanna try again?"
+                                                errorMessage : "Looks like either your username or password were incorrect or your email is not confirmed. Wanna try again?"
                                             });
                                         })                                                                      
                                 }                       

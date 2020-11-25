@@ -12,8 +12,8 @@ function Order_tr(props) {
             <td>{props.addedAt}</td>
             <td>
                 <div className="cm__products__container__actions">
-                    <Link className="cm__products__container__product__button">Edit</Link> 
-                    <button className="cm__products__container__product__button">Delete</button>
+                    <Link className="cm__products__container__product__button" to={`/manage/orders/editOrder/${props.id}`}>Edit</Link> 
+                    <button className="cm__products__container__product__button" onClick={() => props.cancelOrder(props.id)}>Cancel</button>
                 </div>
             </td>
         </tr>

@@ -26,16 +26,12 @@ export class Cart_View extends Component {
         }
     }
 
+    
+
     render() {
         const { error, isLoaded,isLoggedIn } = this.state;
         const {cartProducts,cartPrice,removeItemFromCart} = this.context;
-        if(cartProducts == null){
-            return (
-                <div>
-                    Loading
-                </div>
-            )
-        }
+        
         return (
             <div className="popup" style={{display : this.props.isCartShown ? 'block' : 'none',opacity : this.props.isCartShown ? '1' : '0'}}>
                 <div className="cart__view">
@@ -44,11 +40,11 @@ export class Cart_View extends Component {
                     <img src="/images/cross16.png" onClick={this.props.onCartShow} className="close__button"></img>
                     </div>
                     <ul className="cart__products">
-                    {cartProducts.map(cartProduct => (
+                    {Array.isArray(cartProducts) ? cartProducts.map(cartProduct => (
                     <li key={cartProduct.product.id,cartProduct.product.variationId}>
                     <Cart_Product id={cartProduct.product.id} variationId={cartProduct.product.variationId} name={cartProduct.product.name} price={cartProduct.product.price} quantity={cartProduct.quantity} image={cartProduct.product.imageUrl} size={cartProduct.option.name} removeItemFromCart={removeItemFromCart}/>
                     </li>
-                    ))}
+                    )) : null}
                     </ul>
                     <div className="cart__total">
                     <p>Total price :</p>

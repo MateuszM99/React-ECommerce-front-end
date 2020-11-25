@@ -33,7 +33,8 @@ export class Header extends Component {
           cartCount : 0,
           categories : [],
           error: null,
-          search: ''
+          search: '',
+          scrolled : false,
         };
 
         this.handleCartShow = this.handleCartShow.bind(this);
@@ -126,7 +127,7 @@ export class Header extends Component {
         )
     }
 
-    componentDidMount(){
+    componentDidMount(){       
         this.handleLoggedIn();      
         this.getCartData();
         this.getCategoriesData();     
@@ -140,10 +141,9 @@ export class Header extends Component {
     render() {
       const {categories} = this.state;
         return (
-            <header>   
+            <header className="header active">   
               <div className="main__header">
-                  <div className="header__logo">
-                  <img src="https://www.codester.com/static/uploads/items/000/017/17418/preview-xl.jpg" className="shop__logo"></img>
+                  <div className="header__logo">            
                   </div>
                   <div className="search__input">
                   <input type="text"  placeholder="Search for your product ..." onChange={this.handleSearchChange}></input>      
@@ -170,10 +170,9 @@ export class Header extends Component {
                   </div>
               </div>
               <div className="main__categories">
-                {categories.map(category => (
-                  <a key={category.id}>
-                    <Link to={`/products/${category.name}`} style={{ textDecoration: 'none' }}>{category.name}</Link>
-                  </a>
+                <Link to={`/`}>Home</Link>
+                {categories.map(category => (                
+                    <Link key={category.id} to={`/category/${category.name}`} style={{ textDecoration: 'none' }}>{category.name}</Link>                
                 ))}
               </div>
             </header>

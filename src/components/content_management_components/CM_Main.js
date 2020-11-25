@@ -16,6 +16,7 @@ import Edit_Category from './Edit_Category'
 import Edit_Option from './Edit_Option'
 import PrivateRoute from '../../'
 import Product_Options_Stock from './Product_Options_Stock'
+import Edit_Order from './Edit_Order'
 
 function Content_Management_Main() {
     return (
@@ -56,8 +57,11 @@ function Content_Management_Main() {
                 <Route path="/manage/accounts">
                     <Accounts_Management/>
                 </Route>
-                <Route path="/manage/orders">
+                <Route path="/manage/orders" exact>
                     <Orders_Management/>
+                </Route>
+                <Route path="/manage/orders/editOrder/:id" exact>
+                    <Edit_Order/>
                 </Route>
                 <Route path="/manage/sales_stats">
                     <Sales_Statistics/>

@@ -3,10 +3,15 @@
     padding: 0;
 }
 
-header{
+.header{
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: sticky;
+    top : 0;
+}
+
+.header.active {
 }
 
 .main__header {
@@ -18,7 +23,8 @@ header{
     font-family: 'Lato', sans-serif;
     font-weight: 400;
     color: black;
-    box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+    background-color: white;
+    transition: all .7s ease-in;
 }
 
 .header__cart {
@@ -116,15 +122,16 @@ header{
 
 
 .main__categories{
-    position: sticky;
     font-family: 'Lato', sans-serif;
+    font-weight: 700;
     text-transform: uppercase;
     height: 8vh;
-    width: 60%;
+    width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
     color: black;
+    background-color: white;
 }
 
 .main__categories a{
@@ -136,3 +143,10 @@ header{
 .main__categories a:hover{
     border-bottom: solid 2px black;
 }
+
+.scrolled{
+    display: flex;
+    position: fixed;
+    width: 100%;
+    top: 0;
+  }

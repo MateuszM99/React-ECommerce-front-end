@@ -25,7 +25,10 @@ import Login from './components/authentication_components/Login';
 import SignUp from './components/authentication_components/SignUp';
 import Content_Management_Main from './components/content_management_components/CM_Main'
 import PrivateRoute from './PrivateRoute';
+import PrivateAdminRoute from './PrivateAdminRoute';
 import CartContextProvider from './contexts/CartContext';
+import AccountEmailConfirm from './components/main_components/AccountEmailConfirm';
+import OrderConfirm from './components/main_components/OrderConfirm';
 
 function App() {
 
@@ -71,12 +74,12 @@ function App() {
               <Product_View_Header/>
               <Product_View/>
           </Route>   
-          <Route path="/products/:id" exact>
+          <Route path="/category/:category" exact>
               <Header/>
               <Product_View_Header/>
               <Product_View/>        
           </Route>
-          <Route path="/products/:categoryId/:productId" exact>
+          <Route path="/category/:categoryId/:productId" exact>
               <Header/>
               <Product_View_Details/>
           </Route>
@@ -91,10 +94,16 @@ function App() {
           </Route>
           <PrivateRoute path="/profile" component={Profile_View}>
           </PrivateRoute>
-          <Route path="/manage" component={Content_Management_Main}>
+          <PrivateAdminRoute path="/manage" component={Content_Management_Main}>
+          </PrivateAdminRoute>
+          <Route path="/accountConfirm/:link" exact>
+              <AccountEmailConfirm/>
+          </Route>
+          <Route path="/orderConfirm/:link" exact>
+              <OrderConfirm/>
           </Route>
           <Route path="/">
-            <Header/>
+            <Header/>           
             <Product_View_Header/>
             <Product_View/>
           </Route>

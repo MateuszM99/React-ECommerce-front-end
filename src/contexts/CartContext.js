@@ -23,6 +23,7 @@ class CartContextProvider extends Component {
                 data = response.data;
                 toast.success(response.data.message);
             } catch(err) {
+                console.log(err);
                 toast.error(err.response.data);
             }
 

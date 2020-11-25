@@ -25,31 +25,27 @@ function Content_Managment_Nav_Tab() {
 
     return (
         <nav className="profile__nav__tabs">
-        <Link className="profile__nav__tabs__tab" to="/manage/products" onClick={() => onTabClick(0)}>
-            <LocalOfferIcon style={{ paddingLeft: '25px' }}/>
-            <p className="profile__nav__tabs__tab__text">Manage Products</p>
-        </Link>
-        <Link className="profile__nav__tabs__tab" to="/manage/categories" onClick={() => onTabClick(1)}>
-            <LocalOfferIcon style={{ paddingLeft: '25px' }}/>
-            <p className="profile__nav__tabs__tab__text">Manage Categories</p>
-        </Link>
-        <Link className="profile__nav__tabs__tab" to="/manage/options" onClick={() => onTabClick(2)}>
-            <LocalOfferIcon style={{ paddingLeft: '25px' }}/>
-            <p className="profile__nav__tabs__tab__text">Manage Options</p>
-        </Link>
-        <Link className="profile__nav__tabs__tab" to="/manage/accounts" onClick={() => onTabClick(3)}>
-            <LockIcon style={{ paddingLeft: '25px' }}/>
-            <p className="profile__nav__tabs__tab__text">Manage Accounts</p>
-        </Link>
-        <Link className="profile__nav__tabs__tab" to="/manage/orders" onClick={() => onTabClick(4)}>
-            <ShoppingCartIcon style={{ paddingLeft: '25px' }}/>
-            <p className="profile__nav__tabs__tab__text">Manage Orders</p>
-        </Link>
-        <Link className="profile__nav__tabs__tab" to="/manage/sales_stats" onClick={() => onTabClick(5)}>
-            <PaymentIcon style={{ paddingLeft: '25px' }}/>
-            <p className="profile__nav__tabs__tab__text">Sales statistics</p>
-        </Link>
-    </nav>
+            <Link className="profile__nav__tabs__tab" to="/manage/products" onClick={() => onTabClick(0)}>
+                <LocalOfferIcon style={{ paddingLeft: '25px' }}/>
+                <p className="profile__nav__tabs__tab__text">Manage Products</p>
+            </Link>
+            <Link className="profile__nav__tabs__tab" to="/manage/categories" onClick={() => onTabClick(1)}>
+                <LocalOfferIcon style={{ paddingLeft: '25px' }}/>
+                <p className="profile__nav__tabs__tab__text">Manage Categories</p>
+            </Link>
+            <Link className="profile__nav__tabs__tab" to="/manage/options" onClick={() => onTabClick(2)}>
+                <LocalOfferIcon style={{ paddingLeft: '25px' }}/>
+                <p className="profile__nav__tabs__tab__text">Manage Options</p>
+            </Link>
+            <Link className="profile__nav__tabs__tab" to="/manage/orders" onClick={() => onTabClick(3)}>
+                <ShoppingCartIcon style={{ paddingLeft: '25px' }}/>
+                <p className="profile__nav__tabs__tab__text">Manage Orders</p>
+            </Link>
+            <Link className="profile__nav__tabs__tab" to="/manage/accounts" onClick={() => onTabClick(4)}>
+                <LockIcon style={{ paddingLeft: '25px' }}/>
+                <p className="profile__nav__tabs__tab__text">Manage Accounts</p>
+            </Link>
+        </nav>
     )
 }
 

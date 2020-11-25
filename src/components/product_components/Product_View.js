@@ -16,12 +16,31 @@ export class Product_View extends Component {
           isLoaded: false,
           products: [],
           searchQuery : "",
+          category : undefined,
         };
       }
 
-      getProductsData = () => {
+      addQuery = (key,value,searchParams) => {
+        searchParams.set(key,value);
+        return searchParams;
+      }
+    
+    removeQuery = (key,searchParams) => {
+        searchParams.delete(key);
+        return searchParams;
+    }
+
+      getProductsData = () => {        
+        let searchParams = new URLSearchParams(this.props.location.search);
+        this.setState({category : undefined});
+        if(this.props.match.params.category != null){
+          console.log('goes there');
+          searchParams = this.removeQuery("categoryName",searchParams);
+          searchParams = this.addQuery("categoryName",this.props.match.params.category,searchParams);
+          this.setState({category : this.props.match.params.category});
+        }
         this.setState({searchQuery : this.props.location.search});
-        fetch("https://localhost:44333/api/products/products" + this.props.location.search)
+        fetch("https://localhost:44333/api/products/products?" + searchParams)
           .then(res => res.json())
           .then(
             (result) => {
@@ -44,7 +63,7 @@ export class Product_View extends Component {
       }
 
       componentDidUpdate(){
-        if(this.state.searchQuery != this.props.location.search)
+        if(this.state.searchQuery != this.props.location.search || (this.state.category != this.props.match.params.category))
         this.getProductsData();
       }
       
@@ -57,7 +76,7 @@ export class Product_View extends Component {
                 <div className="product__main">
                     <ul>
                     {products.map(product => (
-                    <li key={product.name}>
+                    <li key={product.sku}>
                     <Product id={product.id} variationId={product.variationId} title={product.name} price={product.price} image={product.imageUrl} category={product.categoryName} addToCart={addToCart}/>
                     </li>
                     ))}
